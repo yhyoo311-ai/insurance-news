@@ -10,7 +10,14 @@ from config import (
     LIFE_KEYWORDS,
     NONLIFE_KEYWORDS,
     DEDUP_SIMILARITY,
+    PINNED_COMPANIES,
 )
+
+
+def is_pinned(article: dict) -> bool:
+    """핀 지정 회사(예: 롯데손해보험) 기사인지 여부."""
+    text = f"{article['title']} {article.get('description', '')}"
+    return any(c in text for c in PINNED_COMPANIES)
 
 
 def _match_count(text: str, terms: list[str]) -> int:

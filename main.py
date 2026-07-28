@@ -17,6 +17,7 @@ except ImportError:
     pass
 
 from src.collect import collect_all
+from src.filters import filter_articles
 from src.classify import classify_and_dedup
 from src.rank import rank_and_select
 from src.summarize import summarize
@@ -49,6 +50,7 @@ def main() -> None:
         print("[main] 수집된 기사가 없습니다. 종료.")
         return
 
+    articles = filter_articles(articles)
     articles = classify_and_dedup(articles)
     selected = rank_and_select(articles)
     selected = summarize(selected, env["GEMINI_API_KEY"])
