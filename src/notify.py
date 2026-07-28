@@ -1,22 +1,34 @@
 # -*- coding: utf-8 -*-
-"""텔레그램으로 다이제스트 발송."""
+"""텔레그램으로 다이제스트 발송 (대구분 섹션별 정리)."""
 
 import html
 from datetime import datetime, timedelta, timezone
 
 import requests
 
-from config import DIGEST_TITLE, TIMEZONE_OFFSET_HOURS
+from config import DIGEST_TITLE, SECTIONS, TIMEZONE_OFFSET_HOURS
 
 KST = timezone(timedelta(hours=TIMEZONE_OFFSET_HOURS))
 TELEGRAM_MAX = 4000  # 안전 여유 (한도 4096)
 
-CATEGORY_ICON = {"생명": "🟦 생명보험", "손해": "🟥 손해보험", "공통": "⬜ 업계 공통"}
-CATEGORY_ORDER = ["생명", "손해", "공통"]
-
 
 def _esc(text: str) -> str:
     return html.escape(text or "")
+
+
+def _section_icon(name: str) -> str:
+    table = {
+        "M&A": "🤝", "지배구조": "🤝",
+        "소비자": "⚖️", "분쟁": "⚖️", "제재": "⚖️",
+        "규제": "🏛", "제도": "🏛", "정책": "🏛",
+        "실적": "📈", "재무": "📈", "건전성": "📈",
+        "상품": "🛍", "영업": "🛍", "채널": "🛍", "GA": "🛍",
+        "해외": "🌐", "일반동향": "🌐",
+    }
+    for key, icon in table.items():
+        if key in name:
+            return icon
+    return "🔹"
 
 
 def build_message(articles: list[dict]) -> str:
@@ -24,17 +36,23 @@ def build_message(articles: list[dict]) -> str:
     parts = [f"<b>{_esc(DIGEST_TITLE)}</b>", f"🗓 {today} · 총 {len(articles)}건", ""]
 
     idx = 1
-    for cat in CATEGORY_ORDER:
-        group = [a for a in articles if a.get("category") == cat]
+    for sec in SECTIONS:
+        group = sorted(
+            [a for a in articles if a.get("section") == sec["name"]],
+            key=lambda a: a.get("score", 0),
+            reverse=True,
+        )
         if not group:
             continue
-        parts.append(f"<b>{CATEGORY_ICON[cat]}</b>")
+        parts.append(f"<b>{_section_icon(sec['name'])} {_esc(sec['name'])}</b>")
         for a in group:
+            cat = a.get("category")
+            tag = f"[{cat}] " if cat in ("생명", "손해") else ""
             title = _esc(a["title"])
             summary = _esc(a.get("summary", ""))
             url = _esc(a["url"])
             src = _esc(a.get("source", ""))
-            parts.append(f'{idx}. <a href="{url}">{title}</a>')
+            parts.append(f'{idx}. {tag}<a href="{url}">{title}</a>')
             parts.append(f"   {summary}")
             if src:
                 parts.append(f"   <i>{src}</i>")
@@ -74,7 +92,7 @@ def send_telegram(message: str, bot_token: str, chat_id: str) -> None:
                         "chat_id": target,
                         "text": chunk,
                         "parse_mode": "HTML",
-                        "disable_web_page_preview": False,
+                        "disable_web_page_preview": True,
                     },
                     timeout=15,
                 )
@@ -86,5 +104,4 @@ def send_telegram(message: str, bot_token: str, chat_id: str) -> None:
             failures.append(target)
 
     if failures:
-        # 한 대상이라도 실패하면 워크플로우가 빨간불로 보이도록 예외 발생
         raise RuntimeError(f"일부 대상 발송 실패: {', '.join(failures)}")

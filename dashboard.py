@@ -37,9 +37,7 @@ def load_settings() -> dict:
         "importance_keywords": config.IMPORTANCE_KEYWORDS,
         "pinned_companies": config.PINNED_COMPANIES,
         "pinned_max": config.PINNED_MAX,
-        "topic_quotas": config.TOPIC_QUOTAS,
-        "min_articles": config.MIN_ARTICLES,
-        "max_articles": config.MAX_ARTICLES,
+        "sections": config.SECTIONS,
     }
 
 
@@ -167,16 +165,17 @@ def preview():
 
 
 def parse_form(form) -> dict:
-    quotas = []
-    count = _int(form.get("quota_count"), 0)
+    sections = []
+    count = _int(form.get("section_count"), 0)
     for i in range(count):
-        name = (form.get(f"quota_name_{i}") or "").strip()
+        name = (form.get(f"sec_name_{i}") or "").strip()
         if not name:
             continue
-        quotas.append({
+        sections.append({
             "name": name,
-            "min": max(0, _int(form.get(f"quota_min_{i}"), 1)),
-            "terms": _terms(form.get(f"quota_terms_{i}")),
+            "min": max(0, _int(form.get(f"sec_min_{i}"), 3)),
+            "max": max(1, _int(form.get(f"sec_max_{i}"), 5)),
+            "terms": _terms(form.get(f"sec_terms_{i}")),
         })
     return {
         "naver_search_queries": _lines(form.get("naver_search_queries")),
@@ -184,9 +183,7 @@ def parse_form(form) -> dict:
         "importance_keywords": _parse_importance(form.get("importance_keywords")),
         "pinned_companies": _lines(form.get("pinned_companies")),
         "pinned_max": max(0, _int(form.get("pinned_max"), 2)),
-        "topic_quotas": quotas,
-        "min_articles": max(1, _int(form.get("min_articles"), 10)),
-        "max_articles": max(1, _int(form.get("max_articles"), 15)),
+        "sections": sections,
     }
 
 
@@ -197,22 +194,25 @@ def esc(s: str) -> str:
 
 
 def render(s: dict, msg: str, ok: bool) -> str:
-    quotas = s.get("topic_quotas", [])
-    blanks = 3  # 새 주제 추가용 빈 슬롯
-    total = len(quotas) + blanks
+    sections = s.get("sections", [])
+    blanks = 2  # 새 섹션 추가용 빈 슬롯
+    total = len(sections) + blanks
 
-    quota_html = ""
+    sec_html = ""
     for i in range(total):
-        q = quotas[i] if i < len(quotas) else {"name": "", "min": 1, "terms": []}
+        q = sections[i] if i < len(sections) else {"name": "", "min": 3, "max": 5, "terms": []}
         terms = "\n".join(q.get("terms", []))
-        quota_html += f"""
+        order = f'<span class="ord">{i+1}</span>' if i < len(sections) else '<span class="ord new">+</span>'
+        catchall = " (키워드 비우면 = 기타: 나머지 전부 수용)" if not q.get("terms") and q.get("name") else ""
+        sec_html += f"""
         <div class="quota">
           <div class="qrow">
-            <label>주제 이름<input name="quota_name_{i}" value="{esc(q.get('name',''))}" placeholder="(비우면 삭제)"></label>
-            <label class="minbox">최소 보장 건수<input type="number" min="0" name="quota_min_{i}" value="{esc(q.get('min',1))}"></label>
+            <label>{order} 섹션 이름<input name="sec_name_{i}" value="{esc(q.get('name',''))}" placeholder="(비우면 삭제)"></label>
+            <label class="minbox">최소<input type="number" min="0" name="sec_min_{i}" value="{esc(q.get('min',3))}"></label>
+            <label class="minbox">최대<input type="number" min="1" name="sec_max_{i}" value="{esc(q.get('max',5))}"></label>
           </div>
-          <label>포함 키워드 (제목 기준 · 줄바꿈 또는 콤마 구분)
-            <textarea name="quota_terms_{i}" rows="2">{esc(terms)}</textarea>
+          <label>포함 키워드 (제목 우선 · 줄바꿈/콤마 구분){catchall}
+            <textarea name="sec_terms_{i}" rows="2">{esc(terms)}</textarea>
           </label>
         </div>"""
 
@@ -250,23 +250,22 @@ def render(s: dict, msg: str, ok: bool) -> str:
   .preview {{ background:#eee; color:#222; }}
   .banner {{ padding:12px 14px; border-radius:9px; font-size:14px; margin-bottom:14px; }}
   .cols {{ display:flex; gap:14px; }} .cols > label {{ flex:1; }}
+  .ord {{ display:inline-block; min-width:20px; height:20px; line-height:20px; text-align:center;
+          background:#1f6feb; color:#fff; border-radius:50%; font-size:12px; margin-right:6px; }}
+  .ord.new {{ background:#9aa; }}
+  .minbox {{ max-width:90px; }}
 </style></head><body>
 <h1>📊 보험 뉴스 다이제스트 설정</h1>
 <div class="sub">값을 바꾸고 <b>[반영]</b> 을 누르면 GitHub에 저장되어 <b>익일 오전 7시 뉴스부터</b> 적용됩니다.</div>
 {banner}
 <form method="post">
-  <input type="hidden" name="quota_count" value="{total}">
+  <input type="hidden" name="section_count" value="{total}">
 
-  <fieldset><legend>발송 건수</legend>
-    <div class="cols">
-      <label>하루 최대 기사 수<input type="number" min="1" name="max_articles" value="{esc(s.get('max_articles',15))}"></label>
-      <label>하루 최소 기사 수<input type="number" min="1" name="min_articles" value="{esc(s.get('min_articles',10))}"></label>
-    </div>
-  </fieldset>
-
-  <fieldset><legend>🎯 주제 비중 (매일 최소 보장)</legend>
-    <div class="hint">해당 주제 기사가 있으면 매일 '최소 보장 건수'만큼 반드시 포함됩니다. 이름을 비우면 그 주제는 삭제됩니다.</div>
-    {quota_html}
+  <fieldset><legend>🗂 대구분 섹션 (위→아래 순서로 다이제스트에 표시)</legend>
+    <div class="hint">기사를 주제별로 묶어 섹션마다 <b>최소~최대</b> 건수로 정리합니다. 키워드는 제목을 우선 매칭하며,
+      위쪽 섹션이 먼저 배정됩니다(우선순위). 키워드를 비운 섹션은 <b>기타</b>가 되어 나머지 기사를 모두 담습니다(맨 아래 권장).
+      이름을 비우면 그 섹션은 삭제됩니다.</div>
+    {sec_html}
   </fieldset>
 
   <fieldset><legend>📌 핀 지정 회사 (반드시 포함)</legend>

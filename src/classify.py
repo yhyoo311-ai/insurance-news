@@ -11,6 +11,7 @@ from config import (
     NONLIFE_KEYWORDS,
     DEDUP_SIMILARITY,
     PINNED_COMPANIES,
+    SECTIONS,
 )
 
 
@@ -18,6 +19,24 @@ def is_pinned(article: dict) -> bool:
     """핀 지정 회사(예: 롯데손해보험) 기사인지 여부."""
     text = f"{article['title']} {article.get('description', '')}"
     return any(c in text for c in PINNED_COMPANIES)
+
+
+def assign_section(article: dict) -> str:
+    """기사를 대구분 섹션 하나에 배정.
+    ① 제목에서 섹션 키워드 매칭(정확도↑) → ② 본문 보조 매칭 → ③ 기타(빈 terms) 수용."""
+    title = article["title"]
+    text = f"{title} {article.get('description', '')}"
+
+    for sec in SECTIONS:
+        if sec.get("terms") and any(t in title for t in sec["terms"]):
+            return sec["name"]
+    for sec in SECTIONS:
+        if sec.get("terms") and any(t in text for t in sec["terms"]):
+            return sec["name"]
+    for sec in SECTIONS:
+        if not sec.get("terms"):
+            return sec["name"]
+    return SECTIONS[-1]["name"] if SECTIONS else "기타"
 
 
 def _match_count(text: str, terms: list[str]) -> int:
@@ -81,5 +100,6 @@ def dedup_by_similarity(articles: list[dict]) -> list[dict]:
 
 def classify_and_dedup(articles: list[dict]) -> list[dict]:
     for a in articles:
-        a["category"] = classify_one(a)
+        a["category"] = classify_one(a)      # 생명 / 손해 / 공통 (인라인 태그용)
+        a["section"] = assign_section(a)      # 대구분 섹션
     return dedup_by_similarity(articles)
