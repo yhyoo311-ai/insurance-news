@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""중요도 스코어링 → 상위 N건 선별 + 핀 지정 회사 보장 포함."""
+"""중요도 스코어링 → 선별.
+보장 규칙: ① 핀 지정 회사(상한/하한) ② 주제 비중(최소 보장) ③ 나머지는 점수순."""
 
 from datetime import datetime, timedelta, timezone
 
@@ -8,11 +9,23 @@ from config import (
     MAX_ARTICLES,
     PINNED_MAX,
     PINNED_SCORE_BONUS,
+    TOPIC_QUOTAS,
     TIMEZONE_OFFSET_HOURS,
 )
 from src.classify import is_pinned
 
 KST = timezone(timedelta(hours=TIMEZONE_OFFSET_HOURS))
+
+
+def _matches(article: dict, terms: list[str]) -> bool:
+    text = f"{article['title']} {article.get('description', '')}"
+    return any(t in text for t in terms)
+
+
+def _matches_title(article: dict, terms: list[str]) -> bool:
+    """주제 비중 보장용: 제목에 주제어가 있는 '진짜 그 주제' 기사만 인정.
+    (본문에 스쳐 언급된 실적 기사 등이 쿼터를 채우는 것을 방지)"""
+    return any(t in article["title"] for t in terms)
 
 
 def score(article: dict) -> float:
@@ -39,26 +52,53 @@ def score(article: dict) -> float:
     return s
 
 
-def _select_with_pins(ranked: list[dict], limit: int) -> list[dict]:
-    """핀 지정 회사 기사를 '정확히 min(보유수, PINNED_MAX)건' 포함시킨다.
-    - 보장(floor): 있으면 반드시 1건 이상 포함
-    - 상한(cap): 같은 회사 이슈로 도배되지 않도록 PINNED_MAX건까지만
-    나머지 슬롯은 점수 높은 일반 기사로 채운다.
+def _select_with_guarantees(ranked: list[dict], limit: int) -> list[dict]:
+    """점수 내림차순 ranked에서 보장 규칙을 적용해 최대 limit건 선별.
     (ranked는 이미 사건 중복 제거된 풀이라 내용 중복 없음)"""
-    pinned_ranked = [a for a in ranked if is_pinned(a)]
-    non_pinned_ranked = [a for a in ranked if not is_pinned(a)]
+    chosen: list[dict] = []
+    chosen_ids: set[int] = set()
 
-    if not pinned_ranked:
-        return ranked[:limit]
+    def add(a: dict) -> bool:
+        if id(a) not in chosen_ids and len(chosen) < limit:
+            chosen.append(a)
+            chosen_ids.add(id(a))
+            return True
+        return False
 
-    target = min(len(pinned_ranked), PINNED_MAX)
-    keep_pinned = pinned_ranked[:target]                 # 점수 높은 핀 기사 우선
-    fill = non_pinned_ranked[: max(0, limit - len(keep_pinned))]
+    logs: list[str] = []
 
-    selected = sorted(keep_pinned + fill, key=lambda a: a["score"], reverse=True)
-    names = ", ".join(a["title"][:20] for a in keep_pinned)
-    print(f"[rank] 핀 지정 회사 기사 {len(keep_pinned)}건 포함(상한 {PINNED_MAX}) → {names}")
-    return selected
+    # ① 핀 지정 회사: min(보유, PINNED_MAX)건 (상한/하한)
+    pinned = [a for a in ranked if is_pinned(a)]
+    pin_target = min(len(pinned), PINNED_MAX)
+    for a in pinned[:pin_target]:
+        add(a)
+    if pinned:
+        logs.append(f"핀 회사 {pin_target}건")
+
+    # ② 주제 비중: 주제별 최소 min건 보장 (제목 기준, 점수 높은 것 우선)
+    for q in TOPIC_QUOTAS:
+        matches = [a for a in ranked if _matches_title(a, q["terms"])]
+        have = sum(1 for a in chosen if _matches_title(a, q["terms"]))
+        target = min(q["min"], len(matches))
+        need = target - have
+        for a in matches:
+            if need <= 0:
+                break
+            if id(a) not in chosen_ids and add(a):
+                need -= 1
+        got = sum(1 for a in chosen if _matches_title(a, q["terms"]))
+        logs.append(f"'{q['name']}' {got}건")
+
+    # ③ 나머지는 점수순으로 채움 (핀 회사는 상한 유지 위해 추가 안 함)
+    for a in ranked:
+        if len(chosen) >= limit:
+            break
+        if is_pinned(a) and id(a) not in chosen_ids:
+            continue
+        add(a)
+
+    print("[rank] 보장 적용 → " + ", ".join(logs))
+    return sorted(chosen, key=lambda a: a["score"], reverse=True)
 
 
 def rank_and_select(articles: list[dict], limit: int = MAX_ARTICLES) -> list[dict]:
@@ -66,7 +106,7 @@ def rank_and_select(articles: list[dict], limit: int = MAX_ARTICLES) -> list[dic
         a["score"] = score(a)
 
     ranked = sorted(articles, key=lambda a: a["score"], reverse=True)
-    selected = _select_with_pins(ranked, limit)
+    selected = _select_with_guarantees(ranked, limit)
 
     print(f"[rank] {len(articles)}건 중 상위 {len(selected)}건 선별")
     return selected
