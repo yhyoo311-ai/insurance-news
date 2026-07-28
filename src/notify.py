@@ -59,19 +59,32 @@ def _split(text: str, limit: int = TELEGRAM_MAX) -> list[str]:
 
 
 def send_telegram(message: str, bot_token: str, chat_id: str) -> None:
+    """chat_id는 콤마로 여러 대상을 지정할 수 있다.
+    예) '1111317413,@insurance_daily_kr' → 개인 채팅 + 공개 채널 동시 발송."""
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    for chunk in _split(message):
-        resp = requests.post(
-            url,
-            json={
-                "chat_id": chat_id,
-                "text": chunk,
-                "parse_mode": "HTML",
-                "disable_web_page_preview": False,
-            },
-            timeout=15,
-        )
-        if not resp.ok:
-            print(f"[notify] 텔레그램 발송 실패: {resp.status_code} {resp.text}")
-            resp.raise_for_status()
-    print("[notify] 텔레그램 발송 완료")
+    targets = [c.strip() for c in str(chat_id).split(",") if c.strip()]
+
+    failures = []
+    for target in targets:
+        try:
+            for chunk in _split(message):
+                resp = requests.post(
+                    url,
+                    json={
+                        "chat_id": target,
+                        "text": chunk,
+                        "parse_mode": "HTML",
+                        "disable_web_page_preview": False,
+                    },
+                    timeout=15,
+                )
+                if not resp.ok:
+                    raise RuntimeError(f"{resp.status_code} {resp.text}")
+            print(f"[notify] 발송 완료 → {target}")
+        except Exception as e:
+            print(f"[notify] 발송 실패 → {target}: {e}")
+            failures.append(target)
+
+    if failures:
+        # 한 대상이라도 실패하면 워크플로우가 빨간불로 보이도록 예외 발생
+        raise RuntimeError(f"일부 대상 발송 실패: {', '.join(failures)}")
