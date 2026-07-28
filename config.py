@@ -1,15 +1,35 @@
 # -*- coding: utf-8 -*-
 """
 보험 뉴스 다이제스트 설정 파일.
-소스/키워드/회사 사전/파라미터를 여기서 조정합니다.
+
+조절 가능한 항목(검색어·제외어·가중치·주제 비중·핀 회사·발송 건수)은
+같은 폴더의 settings.json 이 있으면 그 값으로 덮어씁니다.
+→ 대시보드(dashboard.py)가 settings.json 을 수정합니다.
+settings.json 이 없거나 일부 키가 없으면 아래 기본값을 사용합니다.
 """
+
+import json as _json
+import os as _os
+
+_SETTINGS_PATH = _os.path.join(_os.path.dirname(__file__), "settings.json")
+try:
+    with open(_SETTINGS_PATH, encoding="utf-8") as _f:
+        _S = _json.load(_f)
+except (FileNotFoundError, ValueError):
+    _S = {}
+
+
+def _get(key, default):
+    """settings.json 값이 있으면 사용, 없으면 코드 기본값."""
+    return _S.get(key, default)
+
 
 # ─────────────────────────────────────────────────────────
 # 수집 파라미터
 # ─────────────────────────────────────────────────────────
 
 # 네이버 뉴스 검색에 사용할 쿼리 목록. 각 쿼리마다 최신순으로 수집합니다.
-NAVER_SEARCH_QUERIES = [
+NAVER_SEARCH_QUERIES = _get("naver_search_queries", [
     "생명보험",
     "손해보험",
     "보험업계",
@@ -31,7 +51,7 @@ NAVER_SEARCH_QUERIES = [
     "보험사 해외진출",
     "보험사 해외법인",
     "보험 베트남 진출",
-]
+])
 
 NAVER_DISPLAY = 100        # 쿼리당 가져올 기사 수 (최대 100)
 LOOKBACK_HOURS = 24        # 최근 몇 시간 내 기사만 대상으로
@@ -68,7 +88,7 @@ NONLIFE_KEYWORDS = ["손해보험", "자동차보험", "실손보험", "화재�
 # 중요도 스코어링용 키워드 가중치 (제목에 포함 시 가산)
 # ─────────────────────────────────────────────────────────
 
-IMPORTANCE_KEYWORDS = {
+IMPORTANCE_KEYWORDS = _get("importance_keywords", {
     "금융감독원": 3, "금감원": 3, "금융위": 3, "당국": 2,
     "인수": 3, "매각": 3, "M&A": 3, "합병": 3,
     "IFRS17": 2, "K-ICS": 2, "킥스": 2, "자본": 1,
@@ -82,11 +102,11 @@ IMPORTANCE_KEYWORDS = {
     "GA": 2, "보험대리점": 2, "법인보험대리점": 2, "설계사": 1, "불완전판매": 2,
     # 해외진출
     "해외진출": 2, "해외법인": 2, "글로벌": 1, "베트남": 1, "동남아": 1, "현지법인": 1,
-}
+})
 
 # 최종 다이제스트에 포함할 기사 수 범위
-MIN_ARTICLES = 10
-MAX_ARTICLES = 15
+MIN_ARTICLES = _get("min_articles", 10)
+MAX_ARTICLES = _get("max_articles", 15)
 
 # 같은 사건 판별 임계값 (제목 유사도 0~1)
 DEDUP_SIMILARITY = 0.60
@@ -96,7 +116,7 @@ DEDUP_SIMILARITY = 0.60
 # ─────────────────────────────────────────────────────────
 
 # 제목에 이 단어가 있으면 제외 (핀 지정 회사 기사는 예외로 유지)
-EXCLUDE_KEYWORDS = [
+EXCLUDE_KEYWORDS = _get("exclude_keywords", [
     # 채용·인사·동정
     "채용", "공채", "신입사원", "경력사원", "인턴", "채용설명회",
     "부고", "별세", "결혼", "약혼", "인사발령", "동정",
@@ -106,7 +126,7 @@ EXCLUDE_KEYWORDS = [
     "국민건강보험", "건보료", "건강보험료", "건강보험공단",
     # 단순 프로모션
     "경품", "사은품",
-]
+])
 
 # 관련성 최소 조건: 아래 용어가 제목·본문에 하나도 없으면 제외
 REQUIRE_RELEVANCE = True
@@ -125,15 +145,15 @@ RELEVANCE_TERMS = LIFE_INSURERS + NONLIFE_INSURERS + [
 # 핀(pin) 지정 회사: 기사가 있으면 내용중복 제거 후 반드시 포함
 # ─────────────────────────────────────────────────────────
 
-PINNED_COMPANIES = ["롯데손해보험", "롯데손보"]
-PINNED_MAX = 2            # 최대 몇 건까지 보장 삽입할지 (1~2건)
-PINNED_SCORE_BONUS = 2    # 자연 노출도 돕도록 소폭 가산
+PINNED_COMPANIES = _get("pinned_companies", ["롯데손해보험", "롯데손보"])
+PINNED_MAX = _get("pinned_max", 2)   # 최대 몇 건까지 보장 삽입할지 (1~2건)
+PINNED_SCORE_BONUS = 2               # 자연 노출도 돕도록 소폭 가산
 
 # ─────────────────────────────────────────────────────────
 # 주제 비중 보장: 해당 주제 기사가 풀에 있으면 최소 min건을 반드시 포함
 # ─────────────────────────────────────────────────────────
 
-TOPIC_QUOTAS = [
+TOPIC_QUOTAS = _get("topic_quotas", [
     {
         "name": "제도·규제·법",
         "terms": [
@@ -157,7 +177,7 @@ TOPIC_QUOTAS = [
         ],
         "min": 1,
     },
-]
+])
 
 # ─────────────────────────────────────────────────────────
 # 요약 (Google Gemini 무료 API)

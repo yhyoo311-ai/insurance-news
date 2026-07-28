@@ -1,0 +1,3 @@
+# 로컬 대시보드(dashboard.py) 실행용. 클라우드(GitHub Actions)에는 불필요.
+flask>=3.0
+requests>=2.31
