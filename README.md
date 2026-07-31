@@ -210,6 +210,10 @@ Cloudflare → **Workers & Pages → insuranceinfo → Settings → Variables an
 > `SITE_PASSWORD` 를 설정하기 전까지는 **아무도** 열 수 없습니다(503). 설정을 깜빡한 채
 > 배포됐을 때 무방비로 열리는 것보다 안전한 쪽으로 정했습니다.
 
+> **배포별 주소 주의.** Pages 는 배포마다 `<해시>.insuranceinfo.pages.dev` 를 발급하고
+> 그 주소는 계속 살아 있습니다. 게이트가 없던 시절의 배포는 새로 배포해도 막히지 않으니
+> **Deployments 목록에서 삭제**해야 닫힙니다 (게이트 도입 시 2건을 지웠습니다).
+
 **⑦ 웹 관리자용 GitHub 토큰**
 
 `https://insuranceinfo.pages.dev/admin/` 에 들어가면 토큰을 요청합니다.
