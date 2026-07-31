@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}관리자모드 · 뉴스·텔레그램 설정{% endblock %}
+
+{% block nav %}
+<a href="{{ url_for('index') }}">← 정보사이트</a>
+{% endblock %}
+
+{% block body %}
+<div class="admin">
+  <div class="tabs">
+    <a class="on" href="{{ url_for('admin_news') }}">뉴스·텔레그램 설정</a>
+    <a href="{{ url_for('admin_companies') }}">보험사 데이터</a>
+  </div>
+
+  <h1>뉴스·텔레그램 설정</h1>
+  <div class="sub">
+    값을 바꾸고 <b>[반영]</b> 을 누르면 <code>settings.json</code> 저장 후 GitHub에 커밋·푸시되어
+    <b>익일 오전 7시 다이제스트부터</b> 적용됩니다.
+  </div>
+
+  {% if msg %}
+  <div class="banner {{ 'ok' if ok else 'bad' }}">{{ msg }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% set blanks = 2 %}
+    {% set total = s.sections | length + blanks %}
+    <input type="hidden" name="section_count" value="{{ total }}">
+
+    <fieldset>
+      <legend>🗂 대구분 섹션 (위→아래 순서로 다이제스트에 표시)</legend>
+      <div class="hint">
+        기사를 주제별로 묶어 섹션마다 <b>최소~최대</b> 건수로 정리합니다. 키워드는 제목을 우선 매칭하며,
+        위쪽 섹션이 먼저 배정됩니다(우선순위). 키워드를 비운 섹션은 <b>기타</b>가 되어 나머지 기사를
+        모두 담습니다(맨 아래 권장). 이름을 비우면 그 섹션은 삭제됩니다.
+      </div>
+
+      {% for i in range(total) %}
+        {% set q = s.sections[i] if i < s.sections | length else {'name': '', 'min': 3, 'max': 5, 'terms': []} %}
+        <div class="quota">
+          <div class="qrow">
+            <label>
+              {% if i < s.sections | length %}
+                <span class="ord">{{ i + 1 }}</span>
+              {% else %}
+                <span class="ord new">+</span>
+              {% endif %}
+              섹션 이름
+              <input type="text" name="sec_name_{{ i }}" value="{{ q.name }}" placeholder="(비우면 삭제)">
+            </label>
+            <label class="minbox">최소<input type="number" min="0" name="sec_min_{{ i }}" value="{{ q.min }}"></label>
+            <label class="minbox">최대<input type="number" min="1" name="sec_max_{{ i }}" value="{{ q.max }}"></label>
+          </div>
+          <label>
+            포함 키워드 (제목 우선 · 줄바꿈/콤마 구분){% if not q.terms and q.name %} — 키워드를 비우면 <b>기타</b>가 되어 나머지 전부 수용{% endif %}
+            <textarea name="sec_terms_{{ i }}" rows="2">{{ q.terms | join('\n') }}</textarea>
+          </label>
+        </div>
+      {% endfor %}
+    </fieldset>
+
+    <fieldset>
+      <legend>📌 핀 지정 회사 (반드시 포함)</legend>
+      <label>회사명 (한 줄에 하나)
+        <textarea name="pinned_companies" rows="3">{{ s.pinned_companies | join('\n') }}</textarea>
+      </label>
+      <label class="minbox">최대 보장 건수
+        <input type="number" min="0" name="pinned_max" value="{{ s.pinned_max }}">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>🔎 검색 키워드 (네이버 뉴스 검색어)</legend>
+      <div class="hint">한 줄에 하나. 많을수록 수집 범위가 넓어집니다.</div>
+      <textarea name="naver_search_queries" rows="8">{{ s.naver_search_queries | join('\n') }}</textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>🚫 제외 키워드 (노이즈 제거)</legend>
+      <div class="hint">
+        제목에 이 단어가 있으면 제외됩니다 (핀 회사 기사는 예외). 한 줄에 하나.
+        정보사이트의 회사별 뉴스에도 함께 적용됩니다.
+      </div>
+      <textarea name="exclude_keywords" rows="6">{{ s.exclude_keywords | join('\n') }}</textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>⭐ 중요도 가중치 (제목 포함 시 가산점)</legend>
+      <div class="hint">형식: <code>키워드: 점수</code> (한 줄에 하나). 점수가 높을수록 상위 노출됩니다.</div>
+      <textarea name="importance_keywords" rows="10">{% for k, v in s.importance_keywords.items() %}{{ k }}: {{ v }}
+{% endfor %}</textarea>
+    </fieldset>
+
+    <div class="bar">
+      <button class="apply" formaction="{{ url_for('admin_news_apply') }}">✅ 반영 (저장 &amp; 배포)</button>
+      <button class="preview" formaction="{{ url_for('admin_news_preview') }}">👁 지금 미리보기 발송</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

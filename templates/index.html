@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<a href="{{ url_for('admin_news') }}">⚙ 관리자모드</a>
+{% endblock %}
+
+{% block body %}
+{% include "_site.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script>window.__BOOT__ = {{ boot | tojson }};</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

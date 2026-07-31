@@ -1,3 +1,6 @@
-# 로컬 대시보드(dashboard.py) 실행용. 클라우드(GitHub Actions)에는 불필요.
+# 로컬 정보사이트(webapp.py)와 스냅샷 빌드(build_static.py) 실행용.
+# 클라우드(GitHub Actions)의 뉴스 다이제스트에는 불필요합니다.
 flask>=3.0
 requests>=2.31
+python-dotenv>=1.0
+yfinance>=0.2      # 시가총액 조회용 (없어도 동작하나 시가총액이 '—' 로 표시됩니다)

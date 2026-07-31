@@ -1,0 +1,97 @@
+{# 히트맵 화면 본문 — 로컬 Flask(index.html)와 정적 스냅샷(build_static.py)이 함께 씁니다 #}
+
+<div class="controls" id="controls">
+  <div class="ctl">
+    <span class="lab">분야</span>
+    <div class="seg">
+      <button type="button" data-group="all" aria-pressed="true">전체</button>
+      {% for g in boot.groups %}
+      <button type="button" data-group="{{ g.id }}" aria-pressed="false">{{ g.name }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="ctl">
+    <span class="lab">크기 기준</span>
+    <div class="seg">
+      <button type="button" data-metric="assets" aria-pressed="true">총자산</button>
+      <button type="button" data-metric="mcap" aria-pressed="false">시가총액</button>
+    </div>
+  </div>
+
+  <div class="ctl">
+    <span class="lab">통화</span>
+    <div class="seg">
+      <button type="button" data-cur="KRW" aria-pressed="true">KRW</button>
+      <button type="button" data-cur="USD" aria-pressed="false">USD</button>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="ctl">
+    <div class="seg">
+      <button type="button" data-view="map" aria-pressed="true">히트맵</button>
+      <button type="button" data-view="table" aria-pressed="false">표로 보기</button>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span>전일 대비</span>
+  <div class="scale">
+    <span class="chip t-dn3">-3%↓</span>
+    <span class="chip t-dn2">-2%</span>
+    <span class="chip t-dn1">-1%</span>
+    <span class="chip t-flat">보합</span>
+    <span class="chip t-up1">+1%</span>
+    <span class="chip t-up2">+2%</span>
+    <span class="chip t-up3">+3%↑</span>
+  </div>
+  <span class="swatch"><span class="box"></span>비상장 (시세 없음)</span>
+  <span>타일 크기 = 선택한 크기 기준 · 타일 클릭 → 상세</span>
+  {% if boot.as_of %}<span>재무 기준일 {{ boot.as_of }}</span>{% endif %}
+</div>
+
+<div class="warn" id="note" hidden></div>
+
+<div class="mapwrap" id="mapwrap">
+  <div class="map" id="map"><p class="skel">불러오는 중…</p></div>
+</div>
+
+<section class="tableview" id="tableview" hidden>
+  <div class="tablescroll">
+    <table>
+      <caption class="skel" style="padding:10px 12px;text-align:left">
+        히트맵과 같은 데이터의 표 보기 — 색에 의존하지 않고 모든 값을 읽을 수 있습니다.
+      </caption>
+      <thead>
+        <tr>
+          <th>분야</th><th>회사</th><th>티커</th>
+          <th style="text-align:right">현재가</th>
+          <th style="text-align:right">전일 대비</th>
+          <th style="text-align:right">시가총액</th>
+          <th style="text-align:right">총자산</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="foot">
+  <div><b>주가 · 전일대비 · 시가총액 · 52주 고저 · 주가차트</b> — Yahoo Finance 조회값 (15분 캐시).</div>
+  <div><b>자산총계 · 부채총계 · 자본총계 · 영업이익 · 당기순이익 · 보험계약부채 · 주요주주</b> —
+    DART 전자공시 사업보고서 {{ boot.as_of }} 기준
+    {%- if boot.verified_count %} ({{ boot.verified_count }}개사){% endif %}.
+    회사별 <b>별도/연결</b> 기준은 패널에 표기하며, 각 회사 패널의 <b>출처</b>에서 공시 원문으로 갈 수 있습니다.
+    {%- if boot.unverified_count %}
+    DART 정기보고서를 제출하지 않는 {{ boot.unverified_count }}개사는 <b>개략치</b>이며 패널에 그렇게 표시됩니다.
+    {%- endif %}</div>
+  <div><b>PER · PBR · ROE</b> — 시가총액을 위 재무값으로 나눈 추정치.
+    <b>K-ICS 비율</b>은 DART 에 없는 감독지표라 관리자모드 직접 입력값입니다.</div>
+  <div><b>최근 주요 뉴스</b> — 네이버 뉴스 검색 API, 회사명이 제목에 있는 기사만 최신순 3건.</div>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" hidden aria-label="회사 상세"></aside>

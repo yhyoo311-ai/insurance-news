@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}한국 보험사 정보 시스템{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      한국 보험사 정보 시스템
+      <span class="sub">Korea Insurance Information System</span>
+    </div>
+    <nav class="topnav">
+      {% block nav %}{% endblock %}
+      <button type="button" id="theme" title="라이트/다크 전환">◐</button>
+    </nav>
+  </header>
+
+  {% block body %}{% endblock %}
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme');
+      var saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.dataset.theme = saved;
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.dataset.theme;
+        if (!cur) {
+          cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

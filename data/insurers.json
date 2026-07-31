@@ -1,0 +1,1760 @@
+{
+  "schema_version": 1,
+  "as_of": "2025-12-31",
+  "data_note": "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). K-ICS 비율은 DART 에 없는 감독지표라 관리자모드에서 직접 관리합니다. 주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다.",
+  "groups": [
+    {
+      "id": "life",
+      "no": "01",
+      "name": "생명보험"
+    },
+    {
+      "id": "nonlife",
+      "no": "02",
+      "name": "손해보험"
+    },
+    {
+      "id": "reinsurance",
+      "no": "03",
+      "name": "재보험·보증"
+    }
+  ],
+  "companies": [
+    {
+      "id": "samsung-life",
+      "name": "삼성생명",
+      "name_en": "Samsung Life Insurance",
+      "group": "life",
+      "listed": true,
+      "ticker": "032830.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "삼성생명"
+      ],
+      "assets": 3099483,
+      "equity": 564168,
+      "net_income": 16998,
+      "kics": 193.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "삼성물산(주)",
+          "stake": 19.34,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이재용",
+          "stake": 10.44,
+          "role": "최대주주의 특수관계인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 6.87,
+          "role": "5% 이상 대량보유 (2024-08-05)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "이부진",
+          "stake": 5.76,
+          "role": "계열회사 등기임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "삼성문화재단",
+          "stake": 4.68,
+          "role": "출연 재단",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "삼성생명공익재단",
+          "stake": 2.18,
+          "role": "출연 재단",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이서현",
+          "stake": 1.15,
+          "role": "최대주주의 특수관계인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00126256",
+      "dart_name": "삼성생명",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004244"
+      },
+      "liabilities": 2535315,
+      "operating_income": 16665,
+      "insurance_liabilities": 2008463,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "hanwha-life",
+      "name": "한화생명",
+      "name_en": "Hanwha Life Insurance",
+      "group": "life",
+      "listed": true,
+      "ticker": "088350.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "한화생명"
+      ],
+      "assets": 1257766,
+      "equity": 124688,
+      "net_income": 3133,
+      "kics": 163.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "(주)한화",
+          "stake": 43.24,
+          "role": "본인(최대주주)",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 5.57,
+          "role": "5% 이상 대량보유 (2025-02-21)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "(주)한화갤러리아타임월드",
+          "stake": 1.75,
+          "role": "계열사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "김동원",
+          "stake": 0.03,
+          "role": "임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "김중원",
+          "stake": 0.02,
+          "role": "임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이경근",
+          "stake": 0.01,
+          "role": "임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00113058",
+      "dart_name": "한화생명",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003585"
+      },
+      "liabilities": 1133078,
+      "operating_income": 4014,
+      "insurance_liabilities": 969358,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "kyobo-life",
+      "name": "교보생명",
+      "name_en": "Kyobo Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "교보생명"
+      ],
+      "assets": 1281658,
+      "equity": 76548,
+      "net_income": 7632,
+      "kics": 275.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "신창재",
+          "stake": 33.78,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "신영애",
+          "stake": 1.17,
+          "role": "최대주주 혈족",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00112882",
+      "dart_name": "교보생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004015"
+      },
+      "liabilities": 1205110,
+      "operating_income": 10616,
+      "insurance_liabilities": 968328,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "shinhan-life",
+      "name": "신한라이프",
+      "name_en": "Shinhan Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "055550.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "신한라이프",
+        "신한생명"
+      ],
+      "assets": 594480,
+      "equity": 62393,
+      "net_income": 5159,
+      "kics": 250.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "신한금융지주회사",
+          "stake": 100.0,
+          "role": "최대주주 본인\n(단일주주)",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00137517",
+      "dart_name": "신한라이프생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004136"
+      },
+      "liabilities": 532087,
+      "operating_income": 7967,
+      "insurance_liabilities": 479126,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "nh-life",
+      "name": "NH농협생명",
+      "name_en": "NH Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "NH농협생명",
+        "농협생명"
+      ],
+      "assets": 526166,
+      "equity": 50883,
+      "net_income": 2155,
+      "kics": 200.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "농협금융지주",
+          "stake": 100.0,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00909349",
+      "dart_name": "농협생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331002277"
+      },
+      "liabilities": 475283,
+      "operating_income": 4541,
+      "insurance_liabilities": 451329,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "miraeasset-life",
+      "name": "미래에셋생명",
+      "name_en": "Mirae Asset Life Insurance",
+      "group": "life",
+      "listed": true,
+      "ticker": "085620.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "미래에셋생명"
+      ],
+      "assets": 328552,
+      "equity": 24365,
+      "net_income": 1249,
+      "kics": 200.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "미래에셋증권",
+          "stake": 22.01,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "미래에셋자산운용(주)",
+          "stake": 17.28,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "미래에셋캐피탈(주)",
+          "stake": 15.59,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "미래에셋컨설팅주식회사",
+          "stake": 5.21,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "김재식",
+          "stake": 0.1,
+          "role": "발행사 등기임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "고영철",
+          "stake": 0.02,
+          "role": "계열사 등기임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "조성식",
+          "stake": 0.02,
+          "role": "발행사 등기임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00112332",
+      "dart_name": "미래에셋생명",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260721",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260721001043"
+      },
+      "liabilities": 304187,
+      "operating_income": 1859,
+      "insurance_liabilities": 269967,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "tongyang-life",
+      "name": "동양생명",
+      "name_en": "Tong Yang Life Insurance",
+      "group": "life",
+      "listed": true,
+      "ticker": "082640.KS",
+      "proxy_ticker": "316140.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "동양생명"
+      ],
+      "assets": 353153,
+      "equity": 15340,
+      "net_income": 658,
+      "kics": 180.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "(주)우리금융지주",
+          "stake": 75.34,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "우리자산운용(주)",
+          "stake": 0.11,
+          "role": "계열사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "유재웅",
+          "stake": 0.01,
+          "role": "계열사임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00117267",
+      "dart_name": "동양생명",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004234"
+      },
+      "liabilities": 337813,
+      "operating_income": 2049,
+      "insurance_liabilities": 281451,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "kb-life",
+      "name": "KB라이프생명",
+      "name_en": "KB Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "105560.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "KB라이프",
+        "KB라이프생명"
+      ],
+      "assets": 352289,
+      "equity": 42186,
+      "net_income": 2659,
+      "kics": 290.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "주식회사KB금융지주",
+          "stake": 100.0,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00160393",
+      "dart_name": "케이비라이프생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003664"
+      },
+      "liabilities": 310103,
+      "operating_income": 4137,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "heungkuk-life",
+      "name": "흥국생명",
+      "name_en": "Heungkuk Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "흥국생명"
+      ],
+      "assets": 238403,
+      "equity": 11837,
+      "net_income": 3393,
+      "kics": 160.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "이호진",
+          "stake": 56.3,
+          "role": "최대주주\n본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이원준",
+          "stake": 14.65,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "대한화섬",
+          "stake": 10.43,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "일주학술\n문화재단",
+          "stake": 4.7,
+          "role": "비영리법인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이동준",
+          "stake": 3.68,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이태준",
+          "stake": 3.68,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "티알엔(주)",
+          "stake": 2.91,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00167068",
+      "dart_name": "흥국생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004251"
+      },
+      "liabilities": 226566,
+      "operating_income": 3715,
+      "insurance_liabilities": 172200,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "metlife-korea",
+      "name": "메트라이프생명",
+      "name_en": "MetLife Korea",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "메트라이프"
+      ],
+      "assets": 240000,
+      "equity": 25000,
+      "net_income": 2000,
+      "kics": 350.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "MetLife Inc.",
+          "stake": 100.0,
+          "role": "모회사(미국)"
+        }
+      ],
+      "dart_code": "00171104",
+      "dart_name": "메트라이프생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260403",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260403003825"
+      }
+    },
+    {
+      "id": "fubon-hyundai-life",
+      "name": "푸본현대생명",
+      "name_en": "Fubon Hyundai Life",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "푸본현대생명"
+      ],
+      "assets": 179830,
+      "equity": 13663,
+      "net_income": -1187,
+      "kics": 160.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "Fubon Life Insurance Co., Ltd.\n (푸본생명보험)",
+          "stake": 88.3,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00459844",
+      "dart_name": "푸본현대생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260420",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260420000334"
+      },
+      "liabilities": 166168,
+      "operating_income": -1778,
+      "insurance_liabilities": 81858,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "abl-life",
+      "name": "ABL생명",
+      "name_en": "ABL Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "316140.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "ABL생명"
+      ],
+      "assets": 192968,
+      "equity": 6324,
+      "net_income": 300,
+      "kics": 200.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "(주)우리금융지주",
+          "stake": 100.0,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00148391",
+      "dart_name": "에이비엘생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[첨부정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260406",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406003191"
+      },
+      "liabilities": 186644,
+      "operating_income": 272,
+      "insurance_liabilities": 178240,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "kdb-life",
+      "name": "KDB생명",
+      "name_en": "KDB Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "KDB생명"
+      ],
+      "assets": 172045,
+      "equity": 4090,
+      "net_income": -1119,
+      "kics": 130.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "한국산업은행",
+          "stake": 99.66,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00104069",
+      "dart_name": "케이디비생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004180"
+      },
+      "liabilities": 167955,
+      "operating_income": -950,
+      "insurance_liabilities": 160871,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "db-life",
+      "name": "DB생명",
+      "name_en": "DB Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "012030.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "DB생명"
+      ],
+      "assets": 121125,
+      "equity": 11890,
+      "net_income": 1839,
+      "kics": 190.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "DB손해보험㈜",
+          "stake": 99.07,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "김준기",
+          "stake": 0.11,
+          "role": "특수관계인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00168933",
+      "dart_name": "DB생명보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260327",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260327000191"
+      },
+      "liabilities": 109235,
+      "operating_income": 2697,
+      "insurance_liabilities": 88115,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "ibk-pension",
+      "name": "IBK연금보험",
+      "name_en": "IBK Pension Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "024110.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "IBK연금보험"
+      ],
+      "assets": 90000,
+      "equity": 6000,
+      "net_income": 400,
+      "kics": 200.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "IBK기업은행",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "00844635",
+      "dart_name": "아이비케이연금보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004893"
+      }
+    },
+    {
+      "id": "im-life",
+      "name": "iM라이프생명",
+      "name_en": "iM Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "139130.KS",
+      "hq": "대구, 대한민국",
+      "aliases": [
+        "iM라이프",
+        "DGB생명",
+        "iM라이프생명"
+      ],
+      "assets": 80000,
+      "equity": 6000,
+      "net_income": 400,
+      "kics": 200.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "iM금융지주",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "00124063",
+      "dart_name": "아이엠라이프생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2025.12)",
+        "rcept_dt": "20260406",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406004393"
+      }
+    },
+    {
+      "id": "lina-life",
+      "name": "라이나생명",
+      "name_en": "Lina Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "라이나생명"
+      ],
+      "assets": 70000,
+      "equity": 20000,
+      "net_income": 3000,
+      "kics": 400.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "Chubb Limited",
+          "stake": 100.0,
+          "role": "모회사(스위스)"
+        }
+      ],
+      "dart_code": "00504232",
+      "dart_name": "라이나생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260406",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406004539"
+      }
+    },
+    {
+      "id": "aia-korea",
+      "name": "AIA생명",
+      "name_en": "AIA Life Korea",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "AIA생명"
+      ],
+      "assets": 70000,
+      "equity": 15000,
+      "net_income": 1500,
+      "kics": 350.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "AIA Group",
+          "stake": 100.0,
+          "role": "모회사(홍콩)"
+        }
+      ],
+      "dart_code": "01295517",
+      "dart_name": "에이아이에이생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260407",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260407002101"
+      }
+    },
+    {
+      "id": "hana-life",
+      "name": "하나생명",
+      "name_en": "Hana Life Insurance",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "086790.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "하나생명"
+      ],
+      "assets": 60000,
+      "equity": 5000,
+      "net_income": 200,
+      "kics": 200.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "하나금융지주",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "00187123",
+      "dart_name": "하나생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260325",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260325000202"
+      }
+    },
+    {
+      "id": "chubb-life",
+      "name": "처브라이프생명",
+      "name_en": "Chubb Life Korea",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "처브라이프"
+      ],
+      "assets": 20000,
+      "equity": 3000,
+      "net_income": 100,
+      "kics": 300.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "Chubb Limited",
+          "stake": 100.0,
+          "role": "모회사(스위스)"
+        }
+      ],
+      "dart_code": "00203102",
+      "dart_name": "처브라이프생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2025.12)",
+        "rcept_dt": "20260408",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260408003172"
+      }
+    },
+    {
+      "id": "kyobo-lifeplanet",
+      "name": "교보라이프플래닛",
+      "name_en": "Kyobo Lifeplanet",
+      "group": "life",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "교보라이프플래닛"
+      ],
+      "assets": 10000,
+      "equity": 1500,
+      "net_income": -50,
+      "kics": 200.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "교보생명",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "00992622",
+      "dart_name": "교보라이프플래닛생명보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260327",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260327001140"
+      }
+    },
+    {
+      "id": "samsung-fire",
+      "name": "삼성화재",
+      "name_en": "Samsung Fire & Marine",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "000810.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "삼성화재"
+      ],
+      "assets": 938090,
+      "equity": 206278,
+      "net_income": 16909,
+      "kics": 280.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "삼성생명",
+          "stake": 15.43,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "인베스코에셋매니지먼트리미티드",
+          "stake": 5.51,
+          "role": "5% 이상 대량보유 (2026-05-29)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "슈로더인베스트먼트매니지먼트",
+          "stake": 5.04,
+          "role": "5% 이상 대량보유 (2025-10-23)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "삼성문화재단",
+          "stake": 3.15,
+          "role": "최대주주의 계열 비영리법인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "삼성복지재단",
+          "stake": 0.37,
+          "role": "최대주주의 계열 비영리법인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이재용",
+          "stake": 0.1,
+          "role": "최대주주의 특수관계인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00139214",
+      "dart_name": "삼성화재해상보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[첨부정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260313",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260313001226"
+      },
+      "liabilities": 731813,
+      "operating_income": 23307,
+      "insurance_liabilities": 487348,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "db-insurance",
+      "name": "DB손해보험",
+      "name_en": "DB Insurance",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "005830.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "DB손해보험",
+        "DB손보"
+      ],
+      "assets": 594088,
+      "equity": 98549,
+      "net_income": 15349,
+      "kics": 220.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "김남호",
+          "stake": 9.19,
+          "role": "본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 8.33,
+          "role": "5% 이상 대량보유 (2026-04-01)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "김준기",
+          "stake": 6.07,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "DB김준기문화재단",
+          "stake": 5.1,
+          "role": "기타 단체",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "BlackRockFundAdvisors",
+          "stake": 5.06,
+          "role": "5% 이상 대량보유 (2026-01-29)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "김주원",
+          "stake": 3.21,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "DB Inc.",
+          "stake": 0.86,
+          "role": "계열사",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00159102",
+      "dart_name": "DB손해보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003904"
+      },
+      "liabilities": 495539,
+      "operating_income": 20878,
+      "insurance_liabilities": 315801,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "hyundai-marine",
+      "name": "현대해상",
+      "name_en": "Hyundai Marine & Fire",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "001450.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "현대해상"
+      ],
+      "assets": 496459,
+      "equity": 48835,
+      "net_income": 5611,
+      "kics": 170.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "정몽윤",
+          "stake": 22.0,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 9.42,
+          "role": "5% 이상 대량보유 (2026-07-01)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "정경선",
+          "stake": 0.45,
+          "role": "최대주주 본인의 子",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "정정이",
+          "stake": 0.38,
+          "role": "최대주주 본인의 子",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "황인관",
+          "stake": 0.01,
+          "role": "임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00164973",
+      "dart_name": "현대해상",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260312",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260312001448"
+      },
+      "liabilities": 447624,
+      "operating_income": 7269,
+      "insurance_liabilities": 348529,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "kb-insurance",
+      "name": "KB손해보험",
+      "name_en": "KB Insurance",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "105560.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "KB손해보험",
+        "KB손보"
+      ],
+      "assets": 448920,
+      "equity": 57172,
+      "net_income": 7811,
+      "kics": 200.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "(주)KB금융지주",
+          "stake": 100.0,
+          "role": "최대주주",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00120216",
+      "dart_name": "KB손해보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003209"
+      },
+      "liabilities": 391748,
+      "operating_income": 11550,
+      "insurance_liabilities": 262197,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "meritz-fire",
+      "name": "메리츠화재",
+      "name_en": "Meritz Fire & Marine",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "138040.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "메리츠화재"
+      ],
+      "assets": 442428,
+      "equity": 58543,
+      "net_income": 16810,
+      "kics": 230.0,
+      "verified": true,
+      "note": "2023년 메리츠금융지주와 포괄적 주식교환으로 상장폐지 — 지주(138040) 100% 자회사",
+      "shareholders": [
+        {
+          "name": "㈜메리츠금융지주",
+          "stake": 100.0,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00117744",
+      "dart_name": "메리츠화재해상보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[첨부정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260401",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260401000273"
+      },
+      "liabilities": 383885,
+      "operating_income": 22878,
+      "insurance_liabilities": 237157,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "hanwha-general",
+      "name": "한화손해보험",
+      "name_en": "Hanwha General Insurance",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "000370.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "한화손해보험",
+        "한화손보"
+      ],
+      "assets": 202791,
+      "equity": 27201,
+      "net_income": 3611,
+      "kics": 200.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "한화생명(주)",
+          "stake": 51.36,
+          "role": "본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "박성규",
+          "stake": 0.09,
+          "role": "임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "나채범",
+          "stake": 0.03,
+          "role": "임원",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "서지훈",
+          "stake": 0.03,
+          "role": "임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00135917",
+      "dart_name": "한화손해보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331000594"
+      },
+      "liabilities": 175589,
+      "operating_income": 4885,
+      "insurance_liabilities": 153485,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "lotte-insurance",
+      "name": "롯데손해보험",
+      "name_en": "Lotte Non-Life Insurance",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "000400.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "롯데손해보험",
+        "롯데손보"
+      ],
+      "assets": 144103,
+      "equity": 6135,
+      "net_income": 513,
+      "kics": 150.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "빅튜라(유)",
+          "stake": 77.04,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00113562",
+      "dart_name": "롯데손해보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004266"
+      },
+      "liabilities": 137968,
+      "operating_income": 647,
+      "insurance_liabilities": 59965,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "nh-property",
+      "name": "농협손해보험",
+      "name_en": "NH Property & Casualty",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "농협손해보험",
+        "NH농협손해보험",
+        "농협손보",
+        "NH농협손보"
+      ],
+      "assets": 128449,
+      "equity": 17189,
+      "net_income": 824,
+      "kics": 250.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "농협금융지주(주)",
+          "stake": 100.0,
+          "role": "본인",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00908155",
+      "dart_name": "NH농협손해보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004099"
+      },
+      "liabilities": 111260,
+      "operating_income": 1466,
+      "insurance_liabilities": 98246,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "heungkuk-fire",
+      "name": "흥국화재",
+      "name_en": "Heungkuk Fire & Marine",
+      "group": "nonlife",
+      "listed": true,
+      "ticker": "000540.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "흥국화재"
+      ],
+      "assets": 125021,
+      "equity": 8369,
+      "net_income": 1517,
+      "kics": 190.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "흥국생명보험(주)",
+          "stake": 40.06,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "태광산업(주)",
+          "stake": 39.13,
+          "role": "계열회사",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00103176",
+      "dart_name": "흥국화재",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260319",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260319001047"
+      },
+      "liabilities": 116653,
+      "operating_income": 1875,
+      "insurance_liabilities": 110772,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "axa-korea",
+      "name": "AXA손해보험",
+      "name_en": "AXA General Insurance Korea",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "AXA손해보험",
+        "악사손해보험",
+        "AXA손보",
+        "악사손보"
+      ],
+      "assets": 50000,
+      "equity": 4000,
+      "net_income": 200,
+      "kics": 220.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "AXA S.A.",
+          "stake": 100.0,
+          "role": "모회사(프랑스)"
+        }
+      ],
+      "dart_code": "00383198",
+      "dart_name": "악사손해보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003812"
+      }
+    },
+    {
+      "id": "mg-insurance",
+      "name": "MG손해보험",
+      "name_en": "MG Non-Life Insurance",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "MG손해보험",
+        "MG손보"
+      ],
+      "assets": 50000,
+      "equity": -1000,
+      "net_income": -600,
+      "kics": 50.0,
+      "verified": false,
+      "note": "부실금융기관 지정 — 계약이전·정리 절차 진행",
+      "shareholders": [
+        {
+          "name": "JC파트너스",
+          "stake": 92.0,
+          "role": "최대주주"
+        }
+      ],
+      "dart_code": "00962861",
+      "dart_name": "엠지손해보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260406",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406003177"
+      }
+    },
+    {
+      "id": "hana-insurance",
+      "name": "하나손해보험",
+      "name_en": "Hana Insurance",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "086790.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "하나손해보험",
+        "하나손보"
+      ],
+      "assets": 20000,
+      "equity": 2500,
+      "net_income": -100,
+      "kics": 180.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "하나금융지주",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "00471891",
+      "dart_name": "하나손해보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "연결감사보고서 (2025.12)",
+        "rcept_dt": "20260325",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260325000539"
+      }
+    },
+    {
+      "id": "carrot-insurance",
+      "name": "캐롯손해보험",
+      "name_en": "Carrot General Insurance",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "캐롯손해보험",
+        "캐롯손보"
+      ],
+      "assets": 10000,
+      "equity": 1500,
+      "net_income": -400,
+      "kics": 200.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "한화손해보험",
+          "stake": 59.6,
+          "role": "최대주주"
+        },
+        {
+          "name": "SK텔레콤·알토스벤처스 등",
+          "stake": 40.0,
+          "role": "재무적 투자자"
+        }
+      ],
+      "dart_code": "01393934",
+      "dart_name": "캐롯손해보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2024.12)",
+        "rcept_dt": "20250327",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250327000620"
+      }
+    },
+    {
+      "id": "kakaopay-insurance",
+      "name": "카카오페이손해보험",
+      "name_en": "KakaoPay Insurance",
+      "group": "nonlife",
+      "listed": false,
+      "ticker": null,
+      "proxy_ticker": "377300.KS",
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "카카오페이손해보험",
+        "카카오페이손보"
+      ],
+      "assets": 5000,
+      "equity": 1200,
+      "net_income": -300,
+      "kics": 300.0,
+      "verified": false,
+      "shareholders": [
+        {
+          "name": "카카오페이",
+          "stake": 100.0,
+          "role": "모회사"
+        }
+      ],
+      "dart_code": "01603877",
+      "dart_name": "카카오페이손해보험",
+      "dart_filing": {
+        "kind": "감사보고서",
+        "report_nm": "감사보고서 (2025.12)",
+        "rcept_dt": "20260323",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260323001537"
+      }
+    },
+    {
+      "id": "korean-re",
+      "name": "코리안리",
+      "name_en": "Korean Reinsurance",
+      "group": "reinsurance",
+      "listed": true,
+      "ticker": "003690.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "코리안리",
+        "코리안리재보험"
+      ],
+      "assets": 139998,
+      "equity": 36595,
+      "net_income": 3166,
+      "kics": 210.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "신영증권",
+          "stake": 11.86,
+          "role": "5% 이상 대량보유 (2026-04-10)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 7.4,
+          "role": "5% 이상 대량보유 (2024-10-07)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "장인순",
+          "stake": 6.11,
+          "role": "본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "스카겐에이에스",
+          "stake": 4.98,
+          "role": "5% 이상 대량보유 (2025-06-10)",
+          "source": "대량보유 상황보고"
+        },
+        {
+          "name": "원종규",
+          "stake": 4.64,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "원종익",
+          "stake": 3.76,
+          "role": "친인척",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "이필규",
+          "stake": 2.4,
+          "role": "임원",
+          "source": "최대주주 현황"
+        }
+      ],
+      "dart_code": "00113191",
+      "dart_name": "코리안리",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260331",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003834"
+      },
+      "liabilities": 103403,
+      "operating_income": 4633,
+      "insurance_liabilities": 95539,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    },
+    {
+      "id": "sgi-seoul-guarantee",
+      "name": "서울보증보험",
+      "name_en": "Seoul Guarantee Insurance",
+      "group": "reinsurance",
+      "listed": true,
+      "ticker": "031210.KS",
+      "proxy_ticker": null,
+      "hq": "서울, 대한민국",
+      "aliases": [
+        "서울보증보험",
+        "SGI서울보증",
+        "서울보증"
+      ],
+      "assets": 93738,
+      "equity": 51740,
+      "net_income": 2642,
+      "kics": 400.0,
+      "verified": true,
+      "shareholders": [
+        {
+          "name": "예금보험공사",
+          "stake": 83.85,
+          "role": "최대주주 본인",
+          "source": "최대주주 현황"
+        },
+        {
+          "name": "국민연금공단",
+          "stake": 6.2,
+          "role": "5% 이상 대량보유 (2025-10-01)",
+          "source": "대량보유 상황보고"
+        }
+      ],
+      "dart_code": "00112998",
+      "dart_name": "서울보증보험",
+      "dart_filing": {
+        "kind": "사업보고서",
+        "report_nm": "사업보고서 (2025.12)",
+        "rcept_dt": "20260323",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260323000639"
+      },
+      "liabilities": 41998,
+      "operating_income": 3713,
+      "insurance_liabilities": 32284,
+      "fs_basis": "별도",
+      "dart_year": 2025,
+      "dart_period": "2025.12.31 현재"
+    }
+  ],
+  "dart_synced": true
+}
