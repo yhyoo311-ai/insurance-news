@@ -39,7 +39,7 @@ try:
 except ImportError:
     pass
 
-from src import console, fisis  # noqa: E402
+from src import console, fisis, settings_store  # noqa: E402
 
 console.setup()
 
@@ -158,14 +158,8 @@ def main() -> int:
         print("\n[fisis] 미리보기입니다. 반영하려면 --write 를 붙여 다시 실행하세요.")
         return 0
 
-    data["data_note"] = (
-        "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 "
-        "DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). "
-        "사업보고서를 내지 않는 회사는 FISIS(금융감독원 금융통계정보시스템) "
-        "업무보고서 값으로 채우고 그렇게 표기합니다. "
-        "K-ICS 비율은 전 회사 FISIS 업무보고서 값이며 경과조치 적용 여부를 함께 표기합니다. "
-        "주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다."
-    )
+    # 문구는 settings_store 한 곳에만 둡니다 — 두 sync 가 각자 쓰면 서로 지웁니다.
+    data["data_note"] = settings_store.DATA_NOTE
     data["fisis_synced"] = True
     data["kics_as_of"] = base_mm
 

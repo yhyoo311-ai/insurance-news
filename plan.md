@@ -482,6 +482,24 @@ DART 56.4조 / FISIS 43.6조다(자산 = 부채 + 자본은 양쪽 다 성립한
 `verified` 만 보고 건너뛰면 FISIS 로 채운 회사가 첫 실행 뒤 영영 갱신되지 않는다.
 `fs_basis` 가 FISIS 인 회사는 계속 FISIS 로 갱신하도록 조건을 나눴다.
 
+### 워크플로우를 실제로 돌려서 잡은 것
+
+로컬에서만 돌려봤을 뿐 `sync-dart.yml`·`sync-fisis.yml` 은 한 번도 실행된 적이 없었다.
+둘 다 돌려보니 두 가지가 나왔다.
+
+**① `DART_API_KEY` 가 등록돼 있지 않았다.** 지금까지 DART 값은 전부 로컬에서 조회해
+커밋한 것이라 워크플로우 경로를 한 번도 밟지 않았고, 그래서 아무도 몰랐다.
+매월 5일에 조용히 실패하고 있었을 것이다.
+
+**② 두 sync 가 `data_note` 를 서로 지웠다.** `sync_dart.py` 가 자기 문구를 통째로
+덮어쓰는데, 그 문구는 FISIS 를 붙이기 전에 쓴 것이라 "K-ICS 는 관리자모드에서 직접
+관리합니다" 였다. sync-dart 를 돌리자 **데이터는 멀쩡한데 설명만 거짓이 됐다.**
+(회사별 재무·K-ICS 는 전혀 건드려지지 않았다 — 1줄만 바뀌었다.)
+
+→ 문구를 `settings_store.DATA_NOTE` 한 곳으로 모으고 두 스크립트가 그것을 쓰게 했다.
+같은 파일을 여러 갱신 경로가 쓰면, **각자 쓰는 필드는 반드시 갈라놓아야 한다.**
+이건 로컬 단위 실행으로는 절대 안 보이고 두 워크플로우를 순서대로 돌려야만 보인다.
+
 ---
 
 ## 7. 데이터 출처와 신뢰도 (현재)
@@ -588,7 +606,7 @@ K-ICS 도 경과조치 적용 전·후가 섞여 있어 **회사마다 어느 �
 - [x] `SITE_PASSWORD` 등록 (Pages → Settings → Variables and Secrets, Secret 타입)
 - [ ] **Actions 재실행** — Pages 환경변수는 다음 배포부터 적용된다.
       Direct Upload 프로젝트라 Cloudflare 쪽 retry 가 막혀 있어 워크플로우를 다시 돌려야 한다
-- [ ] `FISIS_API_KEY` 를 GitHub Secrets 에 추가 (sync-fisis.yml 용)
+- [x] `FISIS_API_KEY` · `DART_API_KEY` 등록 후 두 워크플로우 실제 실행 확인 (6장 말미)
 - [ ] `/admin/` 에서 GitHub PAT 1회 입력
 - [ ] DART 키 · Cloudflare 토큰 재발급 (대화에 노출됨. 사이트 동작에는 지장 없음)
 

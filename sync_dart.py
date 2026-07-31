@@ -35,7 +35,7 @@ try:
 except ImportError:
     pass
 
-from src import console, dart  # noqa: E402
+from src import console, dart, settings_store  # noqa: E402
 
 console.setup()
 
@@ -145,12 +145,8 @@ def main() -> int:
         if len(date) == 10:
             data["as_of"] = date
 
-    data["data_note"] = (
-        "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 "
-        "DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). "
-        "K-ICS 비율은 DART 에 없는 감독지표라 관리자모드에서 직접 관리합니다. "
-        "주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다."
-    )
+    # 문구는 settings_store 한 곳에만 둡니다 — 두 sync 가 각자 쓰면 서로 지웁니다.
+    data["data_note"] = settings_store.DATA_NOTE
     data["dart_synced"] = True
 
     with io.open(PATH, "w", encoding="utf-8") as f:

@@ -18,6 +18,20 @@ APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SETTINGS_PATH = os.path.join(APP_DIR, "settings.json")
 INSURERS_PATH = os.path.join(APP_DIR, "data", "insurers.json")
 
+# insurers.json 의 data_note — **한 곳에서만 정의합니다.**
+# sync_dart.py 와 sync_fisis.py 가 각자 문구를 쓰면 나중에 실행된 쪽이 앞의 것을
+# 지웁니다. 실제로 그렇게 됐다: FISIS 를 붙인 뒤 sync-dart 가 돌자 K-ICS 설명이
+# "관리자모드에서 직접 관리합니다" 로 되돌아갔다. 데이터는 멀쩡했지만 설명이 거짓이 됐다.
+DATA_NOTE = (
+    "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 "
+    "DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). "
+    "사업보고서를 내지 않는 회사는 FISIS(금융감독원 금융통계정보시스템) "
+    "업무보고서 값으로 채우고 그렇게 표기합니다 — 감독회계 기준이라 "
+    "부채·자본 배분이 DART 와 다를 수 있습니다. "
+    "K-ICS 비율은 전 회사 FISIS 업무보고서 값이며 경과조치 적용 여부를 함께 표기합니다. "
+    "주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다."
+)
+
 
 # ─────────────────────── 뉴스 설정 ───────────────────────
 
