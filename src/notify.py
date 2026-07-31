@@ -98,9 +98,9 @@ def send_telegram(message: str, bot_token: str, chat_id: str) -> None:
                 )
                 if not resp.ok:
                     raise RuntimeError(f"{resp.status_code} {resp.text}")
-            print(f"[notify] 발송 완료 → {target}")
+            print(f"[notify] 발송 완료 -> {target}")
         except Exception as e:
-            print(f"[notify] 발송 실패 → {target}: {e}")
+            print(f"[notify] 발송 실패 -> {target}: {e}")
             failures.append(target)
 
     if failures:

@@ -94,7 +94,7 @@ def collect_rss() -> list[dict]:
     if not RSS_FEEDS:
         return []
     if feedparser is None:
-        print("[collect] feedparser 미설치 — RSS 건너뜀")
+        print("[collect] feedparser 미설치  -  RSS 건너뜀")
         return []
 
     cutoff = datetime.now(KST) - timedelta(hours=LOOKBACK_HOURS)

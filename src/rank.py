@@ -72,7 +72,7 @@ def select_by_sections(articles: list[dict]) -> list[dict]:
     if added:
         logs.append(f"핀 회사 보장 +{added}건")
 
-    print("[rank] 섹션별 선별 → " + ", ".join(logs))
+    print("[rank] 섹션별 선별 -> " + ", ".join(logs))
     print(f"[rank] 총 {len(selected)}건 선별")
     return selected
 

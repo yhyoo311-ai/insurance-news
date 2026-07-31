@@ -94,7 +94,7 @@ def dedup_by_similarity(articles: list[dict]) -> list[dict]:
             article["_norm"] = norm
             kept.append(article)
 
-    print(f"[classify] 사건 중복 제거: {len(articles)} → {len(kept)}건")
+    print(f"[classify] 사건 중복 제거: {len(articles)} -> {len(kept)}건")
     return kept
 
 

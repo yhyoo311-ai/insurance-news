@@ -16,6 +16,10 @@ try:
 except ImportError:
     pass
 
+from src import console
+
+console.setup()
+
 from src.collect import collect_all
 from src.filters import filter_articles
 from src.classify import classify_and_dedup
