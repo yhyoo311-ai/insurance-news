@@ -483,9 +483,12 @@
     }
 
     // 재무 분석 — 출처와 기준(별도/연결)을 제목에 밝힙니다
-    var finLabel = d.verified
-      ? (d.dart_year || '') + ' 사업보고서' + (d.fs_basis ? ' · ' + d.fs_basis : '') + ' (DART)'
-      : '개략치 · DART 정기보고서 미제출';
+    var finLabel = !d.verified
+      ? '개략치 · 출처 미확인'
+      : d.fs_basis === '감독업무보고서(FISIS)'
+        // 사업보고서를 내지 않는 회사는 감독당국 업무보고서로 채웁니다
+        ? '업무보고서 · 감독회계 (FISIS)'
+        : (d.dart_year || '') + ' 사업보고서' + (d.fs_basis ? ' · ' + d.fs_basis : '') + ' (DART)';
     h += '<div class="sect"><h3>재무 분석 <span class="qual">' + esc(finLabel) + '</span></h3><div class="stats">';
     h += stat('시가총액', d.market_cap ? bigMoney(d.market_cap) : '—');
     h += stat('총자산', bigMoney((d.assets || 0) * EOK));
@@ -502,7 +505,9 @@
     h += stat('PBR', d.ratios.pbr !== null ? d.ratios.pbr.toFixed(2) : '—', false, true);
     h += stat('ROE', d.ratios.roe !== null ? d.ratios.roe.toFixed(1) + '%' : '—',
       (d.ratios.roe || 0) < 0, true);
-    h += stat('K-ICS 비율', d.kics ? d.kics.toFixed(1) + '%' : '—', false, false, '직접 입력');
+    // K-ICS 는 경과조치 적용 여부에 따라 같은 회사도 값이 달라집니다 — 어느 쪽인지 함께 밝힙니다
+    h += stat('K-ICS 비율', d.kics !== null && d.kics !== undefined ? d.kics.toFixed(2) + '%' : '—',
+      (d.kics || 0) < 100, false, d.kics_basis || 'FISIS');
     if (q) {
       h += stat('52주 최고', price(q.high_52w));
       h += stat('52주 최저', price(q.low_52w));
@@ -559,13 +564,20 @@
     }
     h += '</div>';
 
-    h += '<p class="fxnote">' + (d.verified
-      ? '재무는 ' + esc(d.dart_period || d.as_of || '') + ' DART 사업보고서 ' +
-        esc(d.fs_basis || '') + ' 기준입니다. '
-      : '이 회사는 DART 정기보고서를 제출하지 않아 재무가 <b>개략치</b>입니다. ' +
-        '위 감사보고서 원문을 열어 관리자모드에서 교정하세요. ') +
-      'PER·PBR·ROE는 시가총액을 이 재무값으로 나눈 추정치이고, K-ICS 비율은 DART 에 없는 ' +
-      '감독지표라 직접 입력값입니다.</p></div>';
+    var finNote = !d.verified
+      ? '이 회사는 재무 출처를 확인하지 못해 <b>개략치</b>입니다. ' +
+        '위 공시 원문을 열어 관리자모드에서 교정하세요. '
+      : d.fs_basis === '감독업무보고서(FISIS)'
+        ? '이 회사는 증권을 발행하지 않아 DART 사업보고서가 없습니다. 재무는 ' +
+          '금융감독원 <b>업무보고서(FISIS)</b> 값이라 감독회계 기준이며, ' +
+          'DART 기준 회사와는 부채·자본 배분이 다를 수 있습니다. '
+        : '재무는 ' + esc(d.dart_period || d.as_of || '') + ' DART 사업보고서 ' +
+          esc(d.fs_basis || '') + ' 기준입니다. ';
+
+    h += '<p class="fxnote">' + finNote +
+      'PER·PBR·ROE는 시가총액을 이 재무값으로 나눈 추정치입니다. ' +
+      'K-ICS 비율은 금융감독원 업무보고서(FISIS) 값이며, ' +
+      '경과조치를 신청한 회사는 적용 후 기준이라 적용 전 값과 다릅니다.</p></div>';
 
     return h;
   }

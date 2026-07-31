@@ -348,6 +348,7 @@
     h += '<div class="stickybar">' +
       '<button type="button" class="btn primary" id="saveCo">✅ 저장 &amp; 배포</button>' +
       '<button type="button" class="btn" data-run="sync-dart.yml">📥 DART 전체 갱신</button>' +
+      '<button type="button" class="btn" data-run="sync-fisis.yml">📊 K-ICS·감독통계 갱신</button>' +
       '</div>';
 
     el('coForm').innerHTML = h;
@@ -431,6 +432,7 @@
   var RUN_LABEL = {
     'site.yml': '사이트 갱신',
     'sync-dart.yml': 'DART 갱신',
+    'sync-fisis.yml': 'K-ICS 갱신',
     'daily.yml': '미리보기 발송',
   };
 

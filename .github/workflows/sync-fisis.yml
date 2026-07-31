@@ -1,0 +1,66 @@
+name: K-ICS·감독통계 갱신 (FISIS)
+
+# 관리자 화면의 [FISIS 갱신] 버튼이 이 워크플로우를 실행합니다.
+# data/insurers.json 을 갱신해 커밋하면 site.yml 의 push 트리거가 재배포합니다.
+#
+# 필요한 Secrets: FISIS_API_KEY
+#
+# 무엇을 채우나
+#   · K-ICS(지급여력비율) — 전 회사. DART 에 없는 감독지표라 여기가 유일한 출처입니다.
+#   · 증권 미발행사(사업보고서 없음)의 재무 — DART 로 검증된 회사는 건드리지 않습니다.
+#
+# sync-dart.yml 보다 늦게 돌립니다. DART 가 as_of 를 정하고, FISIS 가 그 기준월을 따릅니다.
+# 순서가 뒤집혀도 값이 깨지지는 않지만, 기준월이 한 분기 밀릴 수 있습니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "기준월 YYYYMM (비우면 insurers.json 의 as_of 를 따름)"
+        required: false
+        default: ""
+  schedule:
+    - cron: "0 2 5 * *"   # 매월 5일 KST 11:00 — sync-dart(10:00) 다음
+
+concurrency:
+  group: fisis-sync
+
+permissions:
+  contents: write          # data/insurers.json 커밋
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 의존성 설치
+        run: pip install -r requirements-dashboard.txt
+
+      - name: FISIS 갱신
+        env:
+          FISIS_API_KEY: ${{ secrets.FISIS_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.base }}" ]; then
+            python sync_fisis.py --write --base "${{ inputs.base }}"
+          else
+            python sync_fisis.py --write
+          fi
+
+      - name: 변경 있으면 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/insurers.json
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 건너뜀"
+          else
+            git commit -m "K-ICS·감독통계 갱신 (자동)"
+            git push
+          fi

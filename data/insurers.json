@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2025-12-31",
-  "data_note": "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). K-ICS 비율은 DART 에 없는 감독지표라 관리자모드에서 직접 관리합니다. 주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다.",
+  "data_note": "자산총계·부채총계·자본총계·당기순이익·영업이익·보험계약부채·주요주주는 DART 전자공시 사업보고서 값입니다(회사별 별도/연결 기준 표기). 사업보고서를 내지 않는 회사는 FISIS(금융감독원 금융통계정보시스템) 업무보고서 값으로 채우고 그렇게 표기합니다. K-ICS 비율은 전 회사 FISIS 업무보고서 값이며 경과조치 적용 여부를 함께 표기합니다. 주가·시가총액·52주 고저는 Yahoo Finance 조회값입니다.",
   "groups": [
     {
       "id": "life",
@@ -35,7 +35,7 @@
       "assets": 3099483,
       "equity": 564168,
       "net_income": 16998,
-      "kics": 193.0,
+      "kics": 197.97,
       "verified": true,
       "shareholders": [
         {
@@ -94,7 +94,12 @@
       "insurance_liabilities": 2008463,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010595",
+      "fisis_part": "H",
+      "fisis_name": "삼성생명보험주식회사",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512"
     },
     {
       "id": "hanwha-life",
@@ -111,7 +116,7 @@
       "assets": 1257766,
       "equity": 124688,
       "net_income": 3133,
-      "kics": 163.0,
+      "kics": 157.52,
       "verified": true,
       "shareholders": [
         {
@@ -164,7 +169,12 @@
       "insurance_liabilities": 969358,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010593",
+      "fisis_part": "H",
+      "fisis_name": "한화생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "kyobo-life",
@@ -181,7 +191,7 @@
       "assets": 1281658,
       "equity": 76548,
       "net_income": 7632,
-      "kics": 275.0,
+      "kics": 225.95,
       "verified": true,
       "shareholders": [
         {
@@ -210,7 +220,12 @@
       "insurance_liabilities": 968328,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010597",
+      "fisis_part": "H",
+      "fisis_name": "교보생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "shinhan-life",
@@ -228,7 +243,7 @@
       "assets": 594480,
       "equity": 62393,
       "net_income": 5159,
-      "kics": 250.0,
+      "kics": 205.98,
       "verified": true,
       "shareholders": [
         {
@@ -251,7 +266,12 @@
       "insurance_liabilities": 479126,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010599",
+      "fisis_part": "H",
+      "fisis_name": "신한라이프생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "nh-life",
@@ -269,7 +289,7 @@
       "assets": 526166,
       "equity": 50883,
       "net_income": 2155,
-      "kics": 200.0,
+      "kics": 412.99,
       "verified": true,
       "shareholders": [
         {
@@ -292,7 +312,12 @@
       "insurance_liabilities": 451329,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0013173",
+      "fisis_part": "H",
+      "fisis_name": "농협생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "miraeasset-life",
@@ -309,7 +334,7 @@
       "assets": 328552,
       "equity": 24365,
       "net_income": 1249,
-      "kics": 200.0,
+      "kics": 176.68,
       "verified": true,
       "shareholders": [
         {
@@ -368,7 +393,12 @@
       "insurance_liabilities": 269967,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010608",
+      "fisis_part": "H",
+      "fisis_name": "미래에셋생명보험주식회사",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512"
     },
     {
       "id": "tongyang-life",
@@ -385,7 +415,7 @@
       "assets": 353153,
       "equity": 15340,
       "net_income": 658,
-      "kics": 180.0,
+      "kics": 179.84,
       "verified": true,
       "shareholders": [
         {
@@ -420,7 +450,12 @@
       "insurance_liabilities": 281451,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010622",
+      "fisis_part": "H",
+      "fisis_name": "동양생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "kb-life",
@@ -438,7 +473,7 @@
       "assets": 352289,
       "equity": 42186,
       "net_income": 2659,
-      "kics": 290.0,
+      "kics": 272.19,
       "verified": true,
       "shareholders": [
         {
@@ -460,7 +495,12 @@
       "operating_income": 4137,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010616",
+      "fisis_part": "H",
+      "fisis_name": "KB라이프생명보험",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "heungkuk-life",
@@ -477,7 +517,7 @@
       "assets": 238403,
       "equity": 11837,
       "net_income": 3393,
-      "kics": 160.0,
+      "kics": 203.75,
       "verified": true,
       "shareholders": [
         {
@@ -536,7 +576,12 @@
       "insurance_liabilities": 172200,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010596",
+      "fisis_part": "H",
+      "fisis_name": "흥국생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "metlife-korea",
@@ -550,11 +595,11 @@
       "aliases": [
         "메트라이프"
       ],
-      "assets": 240000,
-      "equity": 25000,
-      "net_income": 2000,
-      "kics": 350.0,
-      "verified": false,
+      "assets": 283762,
+      "equity": 34192,
+      "net_income": 1351,
+      "kics": 269.59,
+      "verified": true,
       "shareholders": [
         {
           "name": "MetLife Inc.",
@@ -569,7 +614,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260403",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260403003825"
-      }
+      },
+      "fisis_code": "0010620",
+      "fisis_part": "H",
+      "fisis_name": "메트라이프생명보험(주)",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512",
+      "liabilities": 249570,
+      "operating_income": 2062,
+      "insurance_liabilities": 89706,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "fubon-hyundai-life",
@@ -586,7 +641,7 @@
       "assets": 179830,
       "equity": 13663,
       "net_income": -1187,
-      "kics": 160.0,
+      "kics": 252.09,
       "verified": true,
       "shareholders": [
         {
@@ -609,7 +664,12 @@
       "insurance_liabilities": 81858,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0011320",
+      "fisis_part": "H",
+      "fisis_name": "푸본현대생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "abl-life",
@@ -626,7 +686,7 @@
       "assets": 192968,
       "equity": 6324,
       "net_income": 300,
-      "kics": 200.0,
+      "kics": 171.56,
       "verified": true,
       "shareholders": [
         {
@@ -649,7 +709,12 @@
       "insurance_liabilities": 178240,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010594",
+      "fisis_part": "H",
+      "fisis_name": "에이비엘생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "kdb-life",
@@ -666,7 +731,7 @@
       "assets": 172045,
       "equity": 4090,
       "net_income": -1119,
-      "kics": 130.0,
+      "kics": 205.73,
       "verified": true,
       "shareholders": [
         {
@@ -689,7 +754,12 @@
       "insurance_liabilities": 160871,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010607",
+      "fisis_part": "H",
+      "fisis_name": "케이디비생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "db-life",
@@ -706,7 +776,7 @@
       "assets": 121125,
       "equity": 11890,
       "net_income": 1839,
-      "kics": 190.0,
+      "kics": 268.73,
       "verified": true,
       "shareholders": [
         {
@@ -735,7 +805,12 @@
       "insurance_liabilities": 88115,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010619",
+      "fisis_part": "H",
+      "fisis_name": "DB생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "ibk-pension",
@@ -749,11 +824,11 @@
       "aliases": [
         "IBK연금보험"
       ],
-      "assets": 90000,
-      "equity": 6000,
-      "net_income": 400,
-      "kics": 200.0,
-      "verified": false,
+      "assets": 127156,
+      "equity": 7517,
+      "net_income": 112,
+      "kics": 238.33,
+      "verified": true,
       "shareholders": [
         {
           "name": "IBK기업은행",
@@ -768,7 +843,17 @@
         "report_nm": "감사보고서 (2025.12)",
         "rcept_dt": "20260331",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004893"
-      }
+      },
+      "fisis_code": "0012455",
+      "fisis_part": "H",
+      "fisis_name": "아이비케이연금보험 주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 119639,
+      "operating_income": 159,
+      "insurance_liabilities": 77763,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "im-life",
@@ -784,11 +869,11 @@
         "DGB생명",
         "iM라이프생명"
       ],
-      "assets": 80000,
-      "equity": 6000,
-      "net_income": 400,
-      "kics": 200.0,
-      "verified": false,
+      "assets": 68350,
+      "equity": 2399,
+      "net_income": 209,
+      "kics": 201.07,
+      "verified": true,
       "shareholders": [
         {
           "name": "iM금융지주",
@@ -803,7 +888,17 @@
         "report_nm": "감사보고서 (2025.12)",
         "rcept_dt": "20260406",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406004393"
-      }
+      },
+      "fisis_code": "0010605",
+      "fisis_part": "H",
+      "fisis_name": "아이엠라이프생명보험 주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 65951,
+      "operating_income": 216,
+      "insurance_liabilities": 45689,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "lina-life",
@@ -817,11 +912,11 @@
       "aliases": [
         "라이나생명"
       ],
-      "assets": 70000,
-      "equity": 20000,
-      "net_income": 3000,
-      "kics": 400.0,
-      "verified": false,
+      "assets": 86371,
+      "equity": 60078,
+      "net_income": 3564,
+      "kics": 343.23,
+      "verified": true,
       "shareholders": [
         {
           "name": "Chubb Limited",
@@ -836,7 +931,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260406",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406004539"
-      }
+      },
+      "fisis_code": "0011434",
+      "fisis_part": "H",
+      "fisis_name": "라이나생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 26293,
+      "operating_income": 4572,
+      "insurance_liabilities": 12690,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "aia-korea",
@@ -850,11 +955,11 @@
       "aliases": [
         "AIA생명"
       ],
-      "assets": 70000,
-      "equity": 15000,
-      "net_income": 1500,
-      "kics": 350.0,
-      "verified": false,
+      "assets": 195484,
+      "equity": 26985,
+      "net_income": 1603,
+      "kics": 204.6,
+      "verified": true,
       "shareholders": [
         {
           "name": "AIA Group",
@@ -869,7 +974,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260407",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260407002101"
-      }
+      },
+      "fisis_code": "0010615",
+      "fisis_part": "H",
+      "fisis_name": "에이아이에이생명보험 주식회사",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512",
+      "liabilities": 168499,
+      "operating_income": 2172,
+      "insurance_liabilities": 148789,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "hana-life",
@@ -883,11 +998,11 @@
       "aliases": [
         "하나생명"
       ],
-      "assets": 60000,
-      "equity": 5000,
-      "net_income": 200,
-      "kics": 200.0,
-      "verified": false,
+      "assets": 69797,
+      "equity": 4848,
+      "net_income": 297,
+      "kics": 174.39,
+      "verified": true,
       "shareholders": [
         {
           "name": "하나금융지주",
@@ -902,7 +1017,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260325",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260325000202"
-      }
+      },
+      "fisis_code": "0010618",
+      "fisis_part": "H",
+      "fisis_name": "하나생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 64949,
+      "operating_income": 345,
+      "insurance_liabilities": 34128,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "chubb-life",
@@ -916,11 +1041,11 @@
       "aliases": [
         "처브라이프"
       ],
-      "assets": 20000,
-      "equity": 3000,
-      "net_income": 100,
-      "kics": 300.0,
-      "verified": false,
+      "assets": 15858,
+      "equity": 1747,
+      "net_income": 124,
+      "kics": 204.19,
+      "verified": true,
       "shareholders": [
         {
           "name": "Chubb Limited",
@@ -935,7 +1060,17 @@
         "report_nm": "감사보고서 (2025.12)",
         "rcept_dt": "20260408",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260408003172"
-      }
+      },
+      "fisis_code": "0010625",
+      "fisis_part": "H",
+      "fisis_name": "처브라이프생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 14110,
+      "operating_income": 157,
+      "insurance_liabilities": 9863,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "kyobo-lifeplanet",
@@ -949,11 +1084,11 @@
       "aliases": [
         "교보라이프플래닛"
       ],
-      "assets": 10000,
-      "equity": 1500,
-      "net_income": -50,
-      "kics": 200.0,
-      "verified": false,
+      "assets": 6821,
+      "equity": 1333,
+      "net_income": -201,
+      "kics": 226.46,
+      "verified": true,
       "shareholders": [
         {
           "name": "교보생명",
@@ -968,7 +1103,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260327",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260327001140"
-      }
+      },
+      "fisis_code": "0013436",
+      "fisis_part": "H",
+      "fisis_name": "교보라이프플래닛생명보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 5489,
+      "operating_income": -200,
+      "insurance_liabilities": 5428,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "samsung-fire",
@@ -985,7 +1130,7 @@
       "assets": 938090,
       "equity": 206278,
       "net_income": 16909,
-      "kics": 280.0,
+      "kics": 262.87,
       "verified": true,
       "shareholders": [
         {
@@ -1038,7 +1183,12 @@
       "insurance_liabilities": 487348,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010633",
+      "fisis_part": "I",
+      "fisis_name": "삼성화재해상보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "db-insurance",
@@ -1056,7 +1206,7 @@
       "assets": 594088,
       "equity": 98549,
       "net_income": 15349,
-      "kics": 220.0,
+      "kics": 218.22,
       "verified": true,
       "shareholders": [
         {
@@ -1115,7 +1265,12 @@
       "insurance_liabilities": 315801,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010636",
+      "fisis_part": "I",
+      "fisis_name": "DB손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "hyundai-marine",
@@ -1132,7 +1287,7 @@
       "assets": 496459,
       "equity": 48835,
       "net_income": 5611,
-      "kics": 170.0,
+      "kics": 190.15,
       "verified": true,
       "shareholders": [
         {
@@ -1179,7 +1334,12 @@
       "insurance_liabilities": 348529,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010634",
+      "fisis_part": "I",
+      "fisis_name": "현대해상화재보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "kb-insurance",
@@ -1197,7 +1357,7 @@
       "assets": 448920,
       "equity": 57172,
       "net_income": 7811,
-      "kics": 200.0,
+      "kics": 191.54,
       "verified": true,
       "shareholders": [
         {
@@ -1220,7 +1380,12 @@
       "insurance_liabilities": 262197,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010635",
+      "fisis_part": "I",
+      "fisis_name": "주식회사KB손해보험",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512"
     },
     {
       "id": "meritz-fire",
@@ -1237,7 +1402,7 @@
       "assets": 442428,
       "equity": 58543,
       "net_income": 16810,
-      "kics": 230.0,
+      "kics": 241.33,
       "verified": true,
       "note": "2023년 메리츠금융지주와 포괄적 주식교환으로 상장폐지 — 지주(138040) 100% 자회사",
       "shareholders": [
@@ -1261,7 +1426,12 @@
       "insurance_liabilities": 237157,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010626",
+      "fisis_part": "I",
+      "fisis_name": "메리츠화재해상보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "hanwha-general",
@@ -1279,7 +1449,7 @@
       "assets": 202791,
       "equity": 27201,
       "net_income": 3611,
-      "kics": 200.0,
+      "kics": 208.96,
       "verified": true,
       "shareholders": [
         {
@@ -1320,7 +1490,12 @@
       "insurance_liabilities": 153485,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010627",
+      "fisis_part": "I",
+      "fisis_name": "한화손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "lotte-insurance",
@@ -1338,7 +1513,7 @@
       "assets": 144103,
       "equity": 6135,
       "net_income": 513,
-      "kics": 150.0,
+      "kics": 159.48,
       "verified": true,
       "shareholders": [
         {
@@ -1361,7 +1536,12 @@
       "insurance_liabilities": 59965,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010628",
+      "fisis_part": "I",
+      "fisis_name": "롯데손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "nh-property",
@@ -1381,7 +1561,7 @@
       "assets": 128449,
       "equity": 17189,
       "net_income": 824,
-      "kics": 250.0,
+      "kics": 170.64,
       "verified": true,
       "shareholders": [
         {
@@ -1404,7 +1584,12 @@
       "insurance_liabilities": 98246,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0013174",
+      "fisis_part": "I",
+      "fisis_name": "농협손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "heungkuk-fire",
@@ -1421,7 +1606,7 @@
       "assets": 125021,
       "equity": 8369,
       "net_income": 1517,
-      "kics": 190.0,
+      "kics": 196.03,
       "verified": true,
       "shareholders": [
         {
@@ -1450,7 +1635,12 @@
       "insurance_liabilities": 110772,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010630",
+      "fisis_part": "I",
+      "fisis_name": "흥국화재해상보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "axa-korea",
@@ -1467,11 +1657,11 @@
         "AXA손보",
         "악사손보"
       ],
-      "assets": 50000,
-      "equity": 4000,
-      "net_income": 200,
-      "kics": 220.0,
-      "verified": false,
+      "assets": 8921,
+      "equity": 3183,
+      "net_income": -338,
+      "kics": 201.79,
+      "verified": true,
       "shareholders": [
         {
           "name": "AXA S.A.",
@@ -1486,42 +1676,17 @@
         "report_nm": "감사보고서 (2025.12)",
         "rcept_dt": "20260331",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003812"
-      }
-    },
-    {
-      "id": "mg-insurance",
-      "name": "MG손해보험",
-      "name_en": "MG Non-Life Insurance",
-      "group": "nonlife",
-      "listed": false,
-      "ticker": null,
-      "proxy_ticker": null,
-      "hq": "서울, 대한민국",
-      "aliases": [
-        "MG손해보험",
-        "MG손보"
-      ],
-      "assets": 50000,
-      "equity": -1000,
-      "net_income": -600,
-      "kics": 50.0,
-      "verified": false,
-      "note": "부실금융기관 지정 — 계약이전·정리 절차 진행",
-      "shareholders": [
-        {
-          "name": "JC파트너스",
-          "stake": 92.0,
-          "role": "최대주주"
-        }
-      ],
-      "dart_code": "00962861",
-      "dart_name": "엠지손해보험",
-      "dart_filing": {
-        "kind": "감사보고서",
-        "report_nm": "연결감사보고서 (2025.12)",
-        "rcept_dt": "20260406",
-        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260406003177"
-      }
+      },
+      "fisis_code": "0010653",
+      "fisis_part": "I",
+      "fisis_name": "악사손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 5738,
+      "operating_income": -400,
+      "insurance_liabilities": 4321,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "hana-insurance",
@@ -1536,11 +1701,11 @@
         "하나손해보험",
         "하나손보"
       ],
-      "assets": 20000,
-      "equity": 2500,
-      "net_income": -100,
-      "kics": 180.0,
-      "verified": false,
+      "assets": 26324,
+      "equity": 5897,
+      "net_income": -350,
+      "kics": 155.49,
+      "verified": true,
       "shareholders": [
         {
           "name": "하나금융지주",
@@ -1555,46 +1720,17 @@
         "report_nm": "연결감사보고서 (2025.12)",
         "rcept_dt": "20260325",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260325000539"
-      }
-    },
-    {
-      "id": "carrot-insurance",
-      "name": "캐롯손해보험",
-      "name_en": "Carrot General Insurance",
-      "group": "nonlife",
-      "listed": false,
-      "ticker": null,
-      "proxy_ticker": null,
-      "hq": "서울, 대한민국",
-      "aliases": [
-        "캐롯손해보험",
-        "캐롯손보"
-      ],
-      "assets": 10000,
-      "equity": 1500,
-      "net_income": -400,
-      "kics": 200.0,
-      "verified": false,
-      "shareholders": [
-        {
-          "name": "한화손해보험",
-          "stake": 59.6,
-          "role": "최대주주"
-        },
-        {
-          "name": "SK텔레콤·알토스벤처스 등",
-          "stake": 40.0,
-          "role": "재무적 투자자"
-        }
-      ],
-      "dart_code": "01393934",
-      "dart_name": "캐롯손해보험",
-      "dart_filing": {
-        "kind": "감사보고서",
-        "report_nm": "감사보고서 (2024.12)",
-        "rcept_dt": "20250327",
-        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250327000620"
-      }
+      },
+      "fisis_code": "0011354",
+      "fisis_part": "I",
+      "fisis_name": "하나손해보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512",
+      "liabilities": 20426,
+      "operating_income": -474,
+      "insurance_liabilities": 8534,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "kakaopay-insurance",
@@ -1609,11 +1745,11 @@
         "카카오페이손해보험",
         "카카오페이손보"
       ],
-      "assets": 5000,
-      "equity": 1200,
-      "net_income": -300,
-      "kics": 300.0,
-      "verified": false,
+      "assets": 1591,
+      "equity": 1262,
+      "net_income": -524,
+      "kics": 352.72,
+      "verified": true,
       "shareholders": [
         {
           "name": "카카오페이",
@@ -1628,7 +1764,17 @@
         "report_nm": "감사보고서 (2025.12)",
         "rcept_dt": "20260323",
         "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260323001537"
-      }
+      },
+      "fisis_code": "0019399",
+      "fisis_part": "I",
+      "fisis_name": "주식회사 카카오페이손해보험",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512",
+      "liabilities": 329,
+      "operating_income": -523,
+      "insurance_liabilities": 165,
+      "fs_basis": "감독업무보고서(FISIS)",
+      "fisis_as_of": "202512"
     },
     {
       "id": "korean-re",
@@ -1646,7 +1792,7 @@
       "assets": 139998,
       "equity": 36595,
       "net_income": 3166,
-      "kics": 210.0,
+      "kics": 197.81,
       "verified": true,
       "shareholders": [
         {
@@ -1705,7 +1851,12 @@
       "insurance_liabilities": 95539,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010638",
+      "fisis_part": "I",
+      "fisis_name": "코리안리재보험주식회사",
+      "kics_basis": "경과조치 적용 후",
+      "kics_as_of": "202512"
     },
     {
       "id": "sgi-seoul-guarantee",
@@ -1724,7 +1875,7 @@
       "assets": 93738,
       "equity": 51740,
       "net_income": 2642,
-      "kics": 400.0,
+      "kics": 397.41,
       "verified": true,
       "shareholders": [
         {
@@ -1753,8 +1904,15 @@
       "insurance_liabilities": 32284,
       "fs_basis": "별도",
       "dart_year": 2025,
-      "dart_period": "2025.12.31 현재"
+      "dart_period": "2025.12.31 현재",
+      "fisis_code": "0010637",
+      "fisis_part": "I",
+      "fisis_name": "서울보증보험주식회사",
+      "kics_basis": "경과조치 적용 전",
+      "kics_as_of": "202512"
     }
   ],
-  "dart_synced": true
+  "dart_synced": true,
+  "fisis_synced": true,
+  "kics_as_of": "202512"
 }
