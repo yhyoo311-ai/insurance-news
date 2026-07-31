@@ -1,0 +1,68 @@
+name: 정보사이트 배포 (Cloudflare Pages)
+
+# 스냅샷 방식 — Actions 가 Yahoo·네이버를 조회해 단일 HTML 을 굽고
+# Cloudflare Pages 로 직접 업로드합니다. 서버가 없으니 잠들지 않고 즉시 로딩됩니다.
+#
+# 필요한 Secrets (리포 → Settings → Secrets and variables → Actions)
+#   NAVER_CLIENT_ID / NAVER_CLIENT_SECRET   회사별 뉴스 (없으면 뉴스 영역만 비어 배포)
+#   CLOUDFLARE_API_TOKEN                    Cloudflare Pages 업로드 권한 토큰
+#   CLOUDFLARE_ACCOUNT_ID                   Cloudflare 계정 ID
+# DART_API_KEY 는 여기서 쓰지 않습니다 — 재무는 data/insurers.json 에 이미 들어있고
+# 갱신은 sync-dart.yml 이 담당합니다.
+
+on:
+  workflow_dispatch: {}          # 관리자 화면의 [사이트 지금 갱신] 버튼
+  push:
+    branches: [main]
+    paths:                       # 데이터·화면이 바뀌면 바로 재배포
+      - "data/**"
+      - "static/**"
+      - "templates/**"
+      - "build_static.py"
+      - "src/**"
+      - ".github/workflows/site.yml"
+  schedule:
+    # cron 은 UTC. 한국은 서머타임이 없어 KST = UTC+9.
+    - cron: "0,30 0-7 * * 1-5"   # 평일 KST 09:00~16:30, 30분 간격 (장중)
+    - cron: "20 22 * * *"        # 매일 KST 07:20 — 아침 뉴스 반영
+
+# 동시에 여러 번 돌면 배포가 뒤엉키므로 마지막 것만 남깁니다.
+concurrency:
+  group: site-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 의존성 설치
+        run: pip install -r requirements-dashboard.txt
+
+      - name: 스냅샷 빌드
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          # 관리자 화면이 GitHub API 로 붙을 대상 리포
+          SITE_REPO: ${{ github.repository }}
+        run: python build_static.py
+
+      - name: 빌드 결과 확인
+        run: |
+          test -f dist/index.html || { echo "dist/index.html 이 없습니다"; exit 1; }
+          test -f dist/admin/index.html || { echo "dist/admin/index.html 이 없습니다"; exit 1; }
+          ls -lh dist dist/admin
+
+      - name: Cloudflare Pages 업로드
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=insuranceinfo --branch=main

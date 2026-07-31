@@ -1,0 +1,119 @@
+{# 웹 관리자 — 서버 없이 GitHub API 로 직접 커밋합니다.
+   build_static.py 가 dist/admin/index.html 로 굽고 Cloudflare Pages 가 서비스합니다.
+   로컬 Flask 의 /admin 화면(admin_news.html·admin_companies.html)과 기능이 같습니다. #}
+
+<header class="topbar">
+  <div class="brand">한국 보험사 정보 시스템
+    <span class="sub">관리자</span>
+  </div>
+  <nav class="topnav">
+    <a href="../">← 정보사이트</a>
+    <button type="button" id="theme" title="라이트/다크 전환">◐</button>
+  </nav>
+</header>
+
+<div class="admin" style="max-width:1180px">
+
+  <!-- ── 토큰 ── -->
+  <section id="auth" class="card" style="margin-bottom:18px">
+    <h2 style="margin:0 0 6px;font-size:17px">GitHub 토큰</h2>
+    <div class="hint" id="authState">확인 중…</div>
+
+    <div id="authForm" hidden>
+      <div class="hint" style="margin:10px 0">
+        이 화면은 <b>서버가 없습니다.</b> 설정을 바꾸면 브라우저가 GitHub API 로
+        <code id="repoName">…</code> 리포지토리에 직접 커밋합니다. 그래서 쓰기 권한이 있는
+        토큰이 한 번 필요합니다.
+        <br><br>
+        <b>발급 방법</b> —
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">
+          Fine-grained token 만들기 ↗</a>
+        → Repository access 는 <b>Only select repositories</b> 로 이 리포만 선택 →
+        Permissions 에서 <b>Contents: Read and write</b>, <b>Actions: Read and write</b> 두 개만 켜기.
+        <br>
+        토큰은 <b>이 브라우저에만</b> 저장되며 github.com 외 어디로도 전송되지 않습니다.
+        공용 PC 라면 작업 후 [토큰 삭제] 를 눌러 주세요.
+      </div>
+      <div class="qrow" style="align-items:flex-end">
+        <label style="flex:1">토큰 (github_pat_… 또는 ghp_…)
+          <input type="password" id="tokenInput" placeholder="github_pat_..." autocomplete="off">
+        </label>
+        <button type="button" class="btn primary" id="tokenSave">저장</button>
+      </div>
+    </div>
+
+    <div id="authOk" hidden>
+      <div class="qrow" style="align-items:center;gap:10px">
+        <span class="badge listed" id="authWho">연결됨</span>
+        <span class="hint" style="margin:0">대상 리포 <code id="repoName2">…</code></span>
+        <span class="spacer"></span>
+        <button type="button" class="btn" id="tokenClear">토큰 삭제</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="banner"></div>
+
+  <!-- ── 탭 ── -->
+  <div class="tabs" id="tabs" hidden>
+    <a href="#news" class="on" data-tab="news">뉴스·텔레그램 설정</a>
+    <a href="#companies" data-tab="companies">보험사 데이터</a>
+    <a href="#jobs" data-tab="jobs">배포·갱신</a>
+  </div>
+
+  <!-- ── 뉴스·텔레그램 설정 ── -->
+  <section id="tab-news" class="tabpane" hidden>
+    <div class="sub">
+      값을 바꾸고 <b>[저장 &amp; 배포]</b> 를 누르면 <code>settings.json</code> 이 커밋되어
+      <b>익일 오전 7시 다이제스트부터</b> 적용됩니다.
+    </div>
+    <div id="newsForm"><p class="skel">불러오는 중…</p></div>
+  </section>
+
+  <!-- ── 보험사 데이터 ── -->
+  <section id="tab-companies" class="tabpane" hidden>
+    <div class="sub">
+      히트맵의 <b>총자산</b> 크기와 회사 패널의 <b>재무 분석 · 주요 주주</b>가 여기서 나옵니다.
+      주가·시가총액은 티커로 조회하므로 입력하지 않습니다.
+      저장하면 <code>data/insurers.json</code> 이 커밋되고 <b>사이트가 자동으로 다시 배포</b>됩니다.
+    </div>
+    <div id="coForm"><p class="skel">불러오는 중…</p></div>
+  </section>
+
+  <!-- ── 배포·갱신 ── -->
+  <section id="tab-jobs" class="tabpane" hidden>
+    <div class="sub">GitHub Actions 워크플로우를 지금 실행합니다. 진행 상황은 Actions 탭에서 볼 수 있습니다.</div>
+
+    <fieldset>
+      <legend>🔄 사이트 지금 갱신</legend>
+      <div class="hint">
+        Yahoo 시세와 회사별 뉴스를 새로 조회해 사이트를 다시 배포합니다.
+        평소에는 <b>평일 09:00~16:30 사이 30분마다</b>, 그리고 매일 07:20 에 자동으로 돕니다.
+      </div>
+      <div style="margin-top:10px"><button type="button" class="btn primary" data-run="site.yml">사이트 지금 갱신</button></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>📥 DART 재무·주주 갱신</legend>
+      <div class="hint">
+        사업보고서의 자산·부채·자본·영업이익·순이익·보험계약부채와 최대주주 현황을 가져옵니다.
+        완료되면 <code>data/insurers.json</code> 이 커밋되고 사이트가 자동 재배포됩니다. (1~2분)
+        <b>K-ICS 비율은 DART 에 없어</b> 위 [보험사 데이터] 탭에서 직접 관리해야 합니다.
+      </div>
+      <div style="margin-top:10px"><button type="button" class="btn primary" data-run="sync-dart.yml">DART 전체 갱신</button></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>📨 다이제스트 미리보기 발송</legend>
+      <div class="hint">
+        지금 저장된 설정으로 뉴스를 수집·요약해 텔레그램 채널로 즉시 1회 보냅니다. (1~2분)
+      </div>
+      <div style="margin-top:10px"><button type="button" class="btn" data-run="daily.yml">지금 미리보기 발송</button></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>최근 실행</legend>
+      <div id="runs"><p class="hint">토큰을 저장하면 표시됩니다.</p></div>
+    </fieldset>
+  </section>
+</div>
