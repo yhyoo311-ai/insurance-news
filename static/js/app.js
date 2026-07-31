@@ -1,4 +1,4 @@
-/* 한국 보험사 정보 시스템 — 히트맵 + 회사 패널
+/* Genie's Insurance Note — 히트맵 + 회사 패널
  *
  * 데이터는 두 경로로 들어옵니다.
  *   · 로컬 Flask : window.__BOOT__ (초기) + /api/company/<id> (패널)
@@ -17,7 +17,18 @@
     metric: 'assets', // 'assets' | 'mcap'
     currency: 'KRW',
     view: 'map', // 'map' | 'table'
+    query: '',
+    sort: { key: 'assets', dir: -1 }, // 표 보기 정렬
   };
+
+  /** 검색어 매칭 — 한글 이름·영문명·티커 중 아무거나 걸리면 통과. */
+  function matches(c, q) {
+    if (!q) return true;
+    q = q.toLowerCase();
+    return (c.name || '').toLowerCase().indexOf(q) >= 0
+      || (c.name_en || '').toLowerCase().indexOf(q) >= 0
+      || (c.ticker || '').toLowerCase().indexOf(q) >= 0;
+  }
 
   var detailCache = {};
 
@@ -242,7 +253,8 @@
       if (asStrip) {
         html += '<div class="chips">';
         members.sort(function (a, b) { return b.value - a.value; }).forEach(function (c) {
-          html += '<button type="button" class="chiptile ' + bin(c.listed ? c.change_pct : null) + '" ' +
+          var cdim = state.query && !matches(c, state.query) ? ' dim' : '';
+          html += '<button type="button" class="chiptile ' + bin(c.listed ? c.change_pct : null) + cdim + '" ' +
             'data-id="' + esc(c.id) + '" ' +
             'aria-label="' + esc(c.name + ' ' + (c.listed ? pct(c.change_pct) : '비상장')) + '">' +
             '<span class="tname">' + esc(c.name) + '</span>' +
@@ -265,13 +277,26 @@
 
   function tileHtml(t) {
     var w = t.w - 2, h = t.h - 2;
-    var showName = w > 42 && h > 22;
-    var showPct = w > 52 && h > 34;
-    var fsName = Math.max(9, Math.min(16, Math.round(Math.min(w / 6.2, h / 2.6))));
+
+    // 이름이 들어갈 자리가 없는데 억지로 넣으면 'iM라이프생 / 명' 처럼 조각납니다.
+    // 그래서 **줄바꿈을 아예 허용하지 않고**, 한 줄에 들어가는 크기까지 글자를 줄입니다.
+    // 그래도 안 들어가면 이름을 빼고 툴팁·표 보기에 맡깁니다 (정보는 두 곳에 다 있습니다).
+    // 한글은 한 글자가 약 1em, 라틴·숫자는 약 0.55em 폭을 차지합니다.
+    var em = 0;
+    for (var i = 0; i < t.name.length; i++) {
+      em += t.name.charCodeAt(i) > 0x2000 ? 1 : 0.55;
+    }
+    var fsCap = Math.min(16, Math.round(h / 2.4));
+    var fsFit = Math.floor((w - 8) / em);
+    var fsName = Math.min(fsCap, fsFit);
     var fsPct = Math.max(9, Math.min(13, fsName - 2));
+
+    var showName = w >= 44 && h >= 24 && fsName >= 10;
+    var showPct = showName && h >= 40 && w >= 54;
 
     var inner = '';
     if (showName) {
+      // 두 줄까지만 허용하고 넘치면 말줄임 — 조각난 세 번째 줄이 생기지 않게
       inner += '<span class="tname" style="font-size:' + fsName + 'px">' + esc(t.name) + '</span>';
       if (showPct) {
         inner += t.listed
@@ -280,7 +305,10 @@
       }
     }
 
-    return '<button type="button" class="tile ' + bin(t.listed ? t.change_pct : null) + '" ' +
+    var dim = state.query && !matches(t, state.query) ? ' dim' : '';
+    var hit = state.query && matches(t, state.query) ? ' hit' : '';
+
+    return '<button type="button" class="tile ' + bin(t.listed ? t.change_pct : null) + dim + hit + '" ' +
       'data-id="' + esc(t.id) + '" ' +
       'style="left:' + (t.x + 1) + 'px;top:' + (t.y + 1) + 'px;width:' + w + 'px;height:' + h + 'px" ' +
       'aria-label="' + esc(t.name + ' ' + (t.listed ? pct(t.change_pct) : '비상장')) + '">' +
@@ -302,13 +330,35 @@
 
   /* ─────────────────────── 렌더: 표 보기 ─────────────────────── */
 
+  /** 정렬 키 → 비교값. 값이 없는 행은 방향과 무관하게 항상 아래로 보냅니다. */
+  function sortValue(c, key) {
+    if (key === 'group') return groupName(c.group);
+    if (key === 'name') return c.name || '';
+    if (key === 'ticker') return c.ticker || '';
+    if (key === 'assets') return c.assets;
+    return c[key];
+  }
+
   function renderTable() {
     var gname = {};
     BOOT.groups.forEach(function (g) { gname[g.id] = g.name; });
 
+    var key = state.sort.key, dir = state.sort.dir;
     var rows = BOOT.companies
-      .filter(function (c) { return state.group === 'all' || c.group === state.group; })
-      .sort(function (a, b) { return (b.assets || 0) - (a.assets || 0); })
+      .filter(function (c) {
+        if (state.group !== 'all' && c.group !== state.group) return false;
+        return matches(c, state.query);
+      })
+      .sort(function (a, b) {
+        var x = sortValue(a, key), y = sortValue(b, key);
+        var xn = x === null || x === undefined || x === '';
+        var yn = y === null || y === undefined || y === '';
+        if (xn && yn) return 0;
+        if (xn) return 1;   // 빈 값은 언제나 뒤로
+        if (yn) return -1;
+        if (typeof x === 'string') return x.localeCompare(y, 'ko') * dir;
+        return (x - y) * dir;
+      })
       .map(function (c) {
         var cls = c.change_pct === null || c.change_pct === undefined ? ''
           : (c.change_pct > 0 ? 'up' : c.change_pct < 0 ? 'dn' : '');
@@ -318,10 +368,20 @@
           '<td class="num">' + (c.listed ? price(c.price) : '—') + '</td>' +
           '<td class="num ' + cls + '">' + (c.listed ? pct(c.change_pct) : '—') + '</td>' +
           '<td class="num">' + (c.market_cap ? bigMoney(c.market_cap) : '—') + '</td>' +
-          '<td class="num">' + bigMoney((c.assets || 0) * EOK) + '</td></tr>';
+          '<td class="num">' + bigMoney((c.assets || 0) * EOK) + '</td>' +
+          '<td class="num">' + (c.kics === null || c.kics === undefined ? '—' : c.kics.toFixed(1) + '%') + '</td></tr>';
       }).join('');
 
-    document.getElementById('tbody').innerHTML = rows;
+    document.getElementById('tbody').innerHTML =
+      rows || '<tr><td colspan="8" class="skel">검색 결과가 없습니다.</td></tr>';
+
+    document.querySelectorAll('.sortbtn').forEach(function (b) {
+      var on = b.dataset.sort === key;
+      b.setAttribute('aria-sort', on ? (dir < 0 ? 'descending' : 'ascending') : 'none');
+      b.dataset.on = String(on);
+      b.dataset.dir = on ? (dir < 0 ? 'desc' : 'asc') : '';
+    });
+
     document.querySelectorAll('#tbody .linklike').forEach(function (b) {
       b.addEventListener('click', function () { openPanel(b.dataset.id); });
     });
@@ -391,7 +451,15 @@
     panel.hidden = false;
     scrim.hidden = false;
     panel.scrollTop = 0;
+    panel.classList.remove('scrolled');
     panel.innerHTML = '<p class="skel">불러오는 중…</p>';
+
+    if (!panel.dataset.wired) {
+      panel.dataset.wired = '1';
+      panel.addEventListener('scroll', function () {
+        panel.classList.toggle('scrolled', panel.scrollTop > 4);
+      }, { passive: true });
+    }
 
     getDetail(id).then(function (d) {
       panel.innerHTML = panelHtml(d);
@@ -732,9 +800,49 @@
       rerender();
     });
 
+    // 검색 — 입력할 때마다 다시 그리되, 트리맵은 타일만 흐리게 해 면적은 유지합니다
+    var q = document.getElementById('q');
+    if (q) {
+      var qt;
+      q.addEventListener('input', function () {
+        clearTimeout(qt);
+        qt = setTimeout(function () {
+          state.query = q.value.trim();
+          rerender();
+        }, 90);
+      });
+      q.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          var hits = BOOT.companies.filter(function (c) { return matches(c, q.value.trim()); });
+          if (hits.length) openPanel(hits[0].id);
+        } else if (e.key === 'Escape' && q.value) {
+          e.stopPropagation();       // 패널 닫기보다 검색 지우기가 먼저
+          q.value = '';
+          state.query = '';
+          rerender();
+        }
+      });
+    }
+
     document.getElementById('scrim').addEventListener('click', closePanel);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closePanel();
+      // `/` 로 어디서나 검색으로. 입력 중일 때는 가로채지 않습니다.
+      if (e.key === '/' && q && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
+        e.preventDefault();
+        q.focus();
+        q.select();
+      }
+    });
+
+    document.querySelectorAll('.sortbtn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.dataset.sort;
+        // 같은 열을 다시 누르면 방향만 뒤집고, 새 열은 그 열에 자연스러운 방향으로
+        if (state.sort.key === k) state.sort.dir *= -1;
+        else state.sort = { key: k, dir: /^(name|ticker|group)$/.test(k) ? 1 : -1 };
+        renderTable();
+      });
     });
 
     var t;

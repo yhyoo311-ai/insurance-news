@@ -1,12 +1,52 @@
-/* 한국 보험사 정보 시스템
+/* Genie's Insurance Note
  *
  * 색은 dataviz 방법론에 따라 계산으로 검증했습니다.
  *   등락률 = diverging (파랑 하락 ↔ 빨강 상승 + 중립 회색 보합)
  *   양쪽 arm 모두 ordinal 검증 통과 (명도 단조 · 인접 ΔL ≥ 0.06 · 밝은 끝 ≥ 2:1 · 단일 색상)
  *   비상장 타일은 색이 아니라 '비상장' 라벨로 구분합니다 (색 단독 의존 금지)
+ *
+ * 본문 서체는 KoPubWorld 돋움입니다. CDN 이 아니라 리포에 서브셋을 넣어
+ * 같은 출처에서 서비스합니다 — 사내망에서 외부 CDN 이 막혀도 글꼴이 깨지지 않고,
+ * 한글 11,172자를 전부 담고도 3종 합계 914KB 입니다.
+ * 이모지는 서브셋에 없으므로 시스템 이모지 폰트로 넘어갑니다(의도).
  */
 
+@font-face {
+  font-family: 'KoPubWorld Dotum';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/KoPubWorldDotum-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'KoPubWorld Dotum';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/KoPubWorldDotum-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'KoPubWorld Dotum';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/KoPubWorldDotum-Bold.woff2') format('woff2');
+}
+
 :root {
+  /* KoPub 돋움은 굵기가 300/400/700 세 단계뿐입니다. 500·600 을 쓰면 브라우저가
+     700 을 합성하거나 400 으로 떨어뜨려 굵기 위계가 무너지므로 세 단계만 씁니다. */
+  --font-ui: 'KoPubWorld Dotum', system-ui, -apple-system, 'Segoe UI',
+             'Malgun Gothic', sans-serif;
+  --font-num: 'KoPubWorld Dotum', ui-monospace, 'Segoe UI', sans-serif;
+
+  /* 간격 — 4px 배수 한 벌로 통일 */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
   color-scheme: light;
 
   --surface-1: #fcfcfb;
@@ -141,9 +181,23 @@ body {
   margin: 0;
   background: var(--page);
   color: var(--ink-1);
-  font-family: system-ui, -apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  font-family: var(--font-ui);
+  /* KoPub 돋움은 시스템 산세리프보다 x-height 가 작아 같은 px 에서 작아 보입니다.
+     14px → 15px 로 올리고 자간을 살짝 좁혀 밀도를 유지합니다. */
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 숫자는 자리수가 흔들리면 표·타일에서 읽기 어렵습니다 — 전역으로 고정폭 숫자 */
+.num,
+.tpct,
+.stat b,
+.sumval,
+td.num,
+.chiptile .tpct {
+  font-variant-numeric: tabular-nums;
 }
 
 a {
@@ -156,33 +210,53 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 20px;
+  gap: var(--s4);
+  padding: var(--s3) var(--s5);
   background: var(--surface-1);
   border-bottom: 1px solid var(--hairline);
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 
 .brand {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  align-items: baseline;
+  gap: var(--s3);
+  min-width: 0;
 }
 
-.brand::before {
+/* 워드마크 — 이름이 화면의 첫 고정점이 되도록 굵기·크기로 확실히 세웁니다 */
+.brand .wm {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.brand .wm::before {
   content: '';
   width: 3px;
-  height: 16px;
+  height: 18px;
   background: var(--accent);
   border-radius: 2px;
+  flex: none;
 }
 
 .brand .sub {
-  font-weight: 500;
+  font-weight: 400;
   color: var(--ink-muted);
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 860px) {
+  .brand .sub { display: none; }
 }
 
 .topnav {
@@ -216,14 +290,146 @@ a {
   color: #fff;
 }
 
+/* ─────────────────────── 요약 지표 ───────────────────────
+   화면을 열자마자 '업계가 지금 어떤 상태인가'를 읽을 수 있게 하는 줄입니다.
+   히트맵은 개별 회사를 보여주지만 전체 규모·오늘의 방향은 보여주지 못합니다. */
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.sumcell {
+  background: var(--surface-1);
+  padding: var(--s3) var(--s5);
+  min-width: 0;
+}
+
+.sumlab {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.sumval {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.sumval .unit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  letter-spacing: 0;
+}
+
+/* 상승/하락 개수는 타일 색과 같은 언어를 씁니다 — 화면 전체에서 의미가 일관되도록 */
+.sumval .up { color: var(--up-3); }
+.sumval .dn { color: var(--dn-3); }
+.sumval .sep {
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+/* 날짜가 '2025-12- / 31' 로 끊기면 값이 아니라 사고처럼 보입니다 */
+.sumcell .sumval time,
+.sumcell .sumval .nowrap {
+  white-space: nowrap;
+}
+
+/* 좁은 화면에서는 2열로 고정하고, 홀수로 남는 마지막 칸이 빈 자리를 만들지 않도록
+   가로로 채웁니다 (빈 셀은 배경이 드러나 오류처럼 보입니다) */
+@media (max-width: 720px) {
+  .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .summary .sumcell:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .sumcell { padding: var(--s2) var(--s4); }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) .sumval .up { color: var(--up-3); }
+  :root:where(:not([data-theme='light'])) .sumval .dn { color: var(--dn-3); }
+}
+
+/* ─────────────────────── 회사 검색 ───────────────────────
+   35개사를 트리맵에서 눈으로 찾는 건 느립니다. 타이핑으로 좁히고
+   Enter 로 바로 패널을 엽니다. `/` 로 어디서나 포커스가 옵니다. */
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search input {
+  font: inherit;
+  font-size: 13px;
+  width: 190px;
+  padding: 6px 30px 6px 30px;
+  border: 1px solid var(--grid);
+  border-radius: 8px;
+  background: var(--surface-1);
+  color: var(--ink-1);
+}
+
+.search input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.search .ico {
+  position: absolute;
+  left: 9px;
+  color: var(--ink-muted);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.search .kbd {
+  position: absolute;
+  right: 7px;
+  font-size: 11px;
+  color: var(--ink-muted);
+  border: 1px solid var(--grid);
+  border-radius: 4px;
+  padding: 0 4px;
+  pointer-events: none;
+}
+
+.search input:focus ~ .kbd,
+.search input:not(:placeholder-shown) ~ .kbd { display: none; }
+
+/* 검색어에 안 걸린 타일은 지우지 않고 물러나게 합니다 —
+   사라지면 트리맵의 면적 비례가 깨져 '전체 중 어디쯤'을 잃습니다. */
+.tile.dim,
+.chiptile.dim {
+  opacity: 0.16;
+  filter: saturate(0.4);
+}
+
+.tile.hit {
+  outline-color: var(--ink-1);
+  z-index: 2;
+}
+
 /* ─────────────────────── 필터 한 줄 ─────────────────────── */
 
 .controls {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px 18px;
-  padding: 12px 20px;
+  gap: var(--s2) var(--s4);
+  padding: var(--s2) var(--s5);
   background: var(--surface-1);
   border-bottom: 1px solid var(--hairline);
 }
@@ -249,7 +455,7 @@ a {
 .seg button {
   font: inherit;
   font-size: 12.5px;
-  padding: 5px 11px;
+  padding: 5px 12px;
   border: 0;
   background: transparent;
   color: var(--ink-2);
@@ -264,7 +470,7 @@ a {
 .seg button[aria-pressed='true'] {
   background: var(--accent);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .spacer {
@@ -277,8 +483,8 @@ a {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px 16px;
-  padding: 10px 20px;
+  gap: var(--s2) var(--s4);
+  padding: var(--s2) var(--s5);
   font-size: 12px;
   color: var(--ink-muted);
 }
@@ -388,8 +594,12 @@ a {
 
 .tile .tname {
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   max-width: 100%;
+  /* 줄바꿈 금지 — 크기는 JS 가 한 줄에 맞게 계산합니다.
+     쪼개진 이름('iM라이프생 / 명')보다 이름이 없는 편이 낫습니다. */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tile .tpct {
@@ -510,6 +720,40 @@ a {
   background: var(--surface-1);
 }
 
+/* 정렬 가능한 머리글 — 방향 화살표는 활성 열에만 보여 현재 정렬을 한눈에 알립니다 */
+.sortbtn {
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border-radius: 4px;
+}
+
+.sortbtn:hover { color: var(--accent); }
+
+.sortbtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sortbtn::after {
+  content: '↕';
+  font-size: 10px;
+  opacity: 0.32;
+}
+
+.sortbtn[data-dir='asc']::after { content: '↑'; opacity: 1; color: var(--accent); }
+.sortbtn[data-dir='desc']::after { content: '↓'; opacity: 1; color: var(--accent); }
+
+.tableview th.num .sortbtn { justify-content: flex-end; }
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -587,11 +831,25 @@ tbody tr:last-child td {
   padding: 18px 20px 40px;
 }
 
+/* 패널은 길어서 스크롤하면 '지금 어느 회사를 보는 중인지'를 잃습니다.
+   머리글만 위에 붙여 두면 재무·주주·뉴스를 내려보는 동안에도 기준이 남습니다. */
 .panel .phead {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: -18px -20px 0;
+  padding: 18px 20px 10px;
+  background: var(--surface-1);
+  border-bottom: 1px solid transparent;
+}
+
+/* 스크롤이 시작되면(위쪽에 내용이 생기면) 경계선을 드러내 떠 있음을 알립니다 */
+.panel.scrolled .phead {
+  border-bottom-color: var(--hairline);
 }
 
 .panel .eyebrow {
@@ -896,12 +1154,71 @@ tbody tr:last-child td {
 
 /* ─────────────────────── 푸터 ─────────────────────── */
 
+/* 출처·기준 표기는 이 프로젝트의 원칙이라 숨기지 않습니다. 다만 통짜 문단이면
+   아무도 안 읽습니다 — 항목별로 끊어 라벨을 세우고 표처럼 훑히게 만듭니다. */
+
 .foot {
-  padding: 14px 20px 26px;
-  font-size: 11.5px;
+  padding: var(--s5) var(--s5) var(--s6);
+  margin-top: var(--s3);
+  border-top: 1px solid var(--hairline);
+  font-size: 12px;
   color: var(--ink-muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
+
+.foot h2 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 var(--s3);
+  letter-spacing: 0.02em;
+}
+
+.foot .srcgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--s4) var(--s5);
+  align-items: start;
+}
+
+/* 설명이 유독 긴 항목(공시)은 두 칸을 씁니다 — 한 칸에 몰면 그 열만 길어져
+   각주 전체가 들쭉날쭉해집니다. 칸이 두 개 이상일 때만 적용합니다. */
+@media (min-width: 1000px) {
+  .foot .src.wide { grid-column: span 2; }
+}
+
+.foot .src {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px var(--s2);
+  align-items: start;
+}
+
+.foot .src dt {
+  grid-column: 1 / -1;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.foot .src dd {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.foot .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 5px;
+  border-radius: 4px;
+  border: 1px solid var(--grid);
+  color: var(--ink-2);
+  margin-right: var(--s1);
+  white-space: nowrap;
+}
+
+.foot .tag.measured { border-color: color-mix(in srgb, var(--good) 45%, var(--grid)); }
+.foot .tag.derived { border-color: color-mix(in srgb, var(--critical) 40%, var(--grid)); }
 
 .warn {
   margin: 0 20px 12px;

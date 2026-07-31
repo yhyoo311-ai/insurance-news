@@ -47,6 +47,8 @@ OUT_PATH = os.path.join(DIST_DIR, "index.html")
 ADMIN_PATH = os.path.join(DIST_DIR, "admin", "index.html")
 GATE_SRC = os.path.join(APP_DIR, "gate", "_worker.js")
 GATE_PATH = os.path.join(DIST_DIR, "_worker.js")
+FONT_SRC = os.path.join(APP_DIR, "static", "fonts")
+FONT_DIR = os.path.join(DIST_DIR, "fonts")
 
 
 def read(*parts: str) -> str:
@@ -119,6 +121,28 @@ def write_gate() -> None:
     print(f"[build] 비밀번호 게이트 -> {GATE_PATH}")
 
 
+def write_fonts() -> None:
+    """본문 서체(KoPubWorld 돋움 서브셋)를 dist/fonts/ 로 복사합니다.
+
+    CDN 을 쓰지 않는 이유: 사내망에서 외부 CDN 이 막히면 글꼴만 조용히 깨집니다.
+    같은 출처에서 주면 그런 일이 없고, 한글 전체를 담고도 3종 914KB 입니다.
+    """
+    import shutil
+    if not os.path.isdir(FONT_SRC):
+        raise SystemExit(f"[build] 중단: 폰트 폴더가 없습니다 -> {FONT_SRC}")
+
+    os.makedirs(FONT_DIR, exist_ok=True)
+    total = 0
+    for name in sorted(os.listdir(FONT_SRC)):
+        if not name.endswith(".woff2"):
+            continue
+        shutil.copyfile(os.path.join(FONT_SRC, name), os.path.join(FONT_DIR, name))
+        total += os.path.getsize(os.path.join(FONT_DIR, name))
+    if not total:
+        raise SystemExit(f"[build] 중단: {FONT_SRC} 에 woff2 가 없습니다")
+    print(f"[build] 폰트 -> {FONT_DIR}  ({total / 1024:,.0f} KB)")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--open", action="store_true", help="빌드 후 브라우저로 열기")
@@ -164,6 +188,7 @@ def main() -> int:
 
     write_admin()
     write_gate()
+    write_fonts()
 
     size_kb = os.path.getsize(OUT_PATH) / 1024
     print(f"[build] 완료 -> {OUT_PATH}  ({size_kb:,.0f} KB)")
@@ -183,15 +208,16 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>한국 보험사 정보 시스템</title>
+<title>Genie's Insurance Note</title>
 <style>
 /*__CSS__*/
 </style>
 </head>
 <body>
 <header class="topbar">
-  <div class="brand">한국 보험사 정보 시스템
-    <span class="sub">Korea Insurance Information System · 스냅샷</span></div>
+  <div class="brand">
+    <span class="wm">Genie&#39;s Insurance Note</span>
+    <span class="sub">한국 보험사 정보 노트 · 스냅샷</span></div>
   <nav class="topnav">
     <a href="admin/">⚙ 관리자</a>
     <button type="button" id="theme" title="라이트/다크 전환">◐</button>
@@ -230,7 +256,7 @@ ADMIN_PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>관리자 · 한국 보험사 정보 시스템</title>
+<title>관리자 · Genie's Insurance Note</title>
 <style>
 /*__CSS__*/
 </style>

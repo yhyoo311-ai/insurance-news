@@ -69,13 +69,18 @@ function loginPage(failed) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>한국 보험사 정보 시스템</title>
+<title>Genie's Insurance Note</title>
 <style>
+  /* 로그인 화면도 본문과 같은 서체를 씁니다 — /fonts/ 는 게이트를 통과시킵니다 */
+  @font-face { font-family:'KoPubWorld Dotum'; font-weight:400; font-display:swap;
+               src:url('/fonts/KoPubWorldDotum-Medium.woff2') format('woff2'); }
+  @font-face { font-family:'KoPubWorld Dotum'; font-weight:700; font-display:swap;
+               src:url('/fonts/KoPubWorldDotum-Bold.woff2') format('woff2'); }
   :root { color-scheme: light dark; }
   * { box-sizing: border-box; }
   body { margin:0; min-height:100vh; display:grid; place-items:center;
          background:#f0efec; color:#1c1c1a; padding:24px;
-         font:15px/1.6 system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif; }
+         font:15px/1.6 'KoPubWorld Dotum',system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif; }
   .card { width:100%; max-width:380px; background:#fff; border:1px solid #dcdad4;
           border-radius:12px; padding:28px; }
   h1 { margin:0 0 4px; font-size:17px; letter-spacing:-.01em; }
@@ -99,7 +104,7 @@ function loginPage(failed) {
 </style>
 </head><body>
   <form class="card" method="POST" action="/__login">
-    <h1>한국 보험사 정보 시스템</h1>
+    <h1>Genie&#39;s Insurance Note</h1>
     <p class="sub">계속하려면 비밀번호를 입력하세요.</p>
     <label for="pw">비밀번호</label>
     <input id="pw" name="pw" type="password" autocomplete="current-password" autofocus required>
@@ -138,6 +143,13 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    // 글꼴만은 인증 없이 내보냅니다. 로그인 화면이 본문과 같은 서체로 보이게 하려면
+    // 필요하고, KoPub 은 누구나 받을 수 있는 공개 배포 글꼴이라 새는 정보가 없습니다.
+    // (범위를 /fonts/ 아래 woff2 로만 좁혀 다른 파일이 딸려나가지 않게 합니다)
+    if (url.pathname.startsWith('/fonts/') && url.pathname.endsWith('.woff2')) {
+      return env.ASSETS.fetch(request);
+    }
 
     if (url.pathname === '/__logout') {
       return new Response(null, {

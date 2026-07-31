@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""한국 보험사 정보 시스템 (로컬 실행용).
+"""Genie's Insurance Note — 한국 보험사 정보 노트 (로컬 실행용).
 
 실행:  python webapp.py   → 브라우저에서 http://127.0.0.1:5000
 
@@ -17,7 +17,8 @@ import webbrowser
 from concurrent.futures import ThreadPoolExecutor
 from threading import Timer
 
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import (Flask, jsonify, redirect, render_template, request,
+                   send_from_directory, url_for)
 
 try:
     from dotenv import load_dotenv
@@ -71,6 +72,7 @@ def build_overview() -> dict:
             "price": quote["price"] if quote else None,
             "market_cap": cap,
             "assets": c.get("assets"),
+            "kics": c.get("kics"),
             "quote_failed": bool(c.get("ticker")) and quote is None,
             "note": c.get("note", ""),
         })
@@ -83,7 +85,35 @@ def build_overview() -> dict:
         "verified_count": verified,
         "unverified_count": len(companies) - verified,
         "usdkrw": market.fetch_usdkrw(),
+        "summary": summarize(tiles, data),
         "companies": tiles,
+    }
+
+
+def summarize(tiles: list[dict], data: dict) -> dict:
+    """상단 요약 지표 — 화면을 열자마자 업계 상태가 보이도록.
+
+    K-ICS 는 평균이 아니라 **중앙값**을 씁니다. 회사 규모 차이가 커서 단순평균은
+    소형사 한 곳(예: 400%대)에 크게 끌려가고, 가중평균은 '가중 기준'을 또 설명해야 합니다.
+    중앙값은 '가운데 회사가 어디쯤인지'를 왜곡 없이 보여줍니다.
+    """
+    changes = [t["change_pct"] for t in tiles if t["change_pct"] is not None]
+    kics = sorted(t["kics"] for t in tiles if t.get("kics") is not None)
+    mid = (
+        None if not kics
+        else kics[len(kics) // 2] if len(kics) % 2
+        else round((kics[len(kics) // 2 - 1] + kics[len(kics) // 2]) / 2, 2)
+    )
+    return {
+        "total_assets": sum(t["assets"] or 0 for t in tiles),
+        "company_count": len(tiles),
+        "listed_count": sum(1 for t in tiles if t["listed"]),
+        "up": sum(1 for c in changes if c > 0),
+        "down": sum(1 for c in changes if c < 0),
+        "flat": sum(1 for c in changes if c == 0),
+        "kics_median": mid,
+        "kics_as_of": data.get("kics_as_of", ""),
+        "as_of": data.get("as_of", ""),
     }
 
 
@@ -120,6 +150,18 @@ def build_detail(company_id: str) -> dict | None:
 
 
 # ─────────────────────── 메인 사이트 ───────────────────────
+
+@app.route("/fonts/<path:filename>")
+def fonts(filename: str):
+    """폰트를 /fonts/ 로 서비스합니다.
+
+    정적 스냅샷은 CSS 가 HTML 안에 인라인되어 상대경로가 루트 기준이 됩니다.
+    로컬 Flask 는 CSS 가 /static/css/ 에 있어 상대경로가 어긋납니다.
+    둘 다 `/fonts/...` 하나로 맞추려고 이 라우트를 둡니다.
+    """
+    return send_from_directory(os.path.join(APP_DIR, "static", "fonts"), filename,
+                               max_age=60 * 60 * 24 * 365)
+
 
 @app.route("/")
 def index():
