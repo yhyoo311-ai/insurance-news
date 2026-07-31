@@ -20,8 +20,11 @@
   · GitHub Pages     : 리포에 dist/ 를 push → Settings → Pages → 소스 지정
   · Google Drive 는 HTML을 웹페이지로 서비스하지 않으므로 위 셋 중 하나를 권장합니다.
 
-주의: 발급된 주소는 기본적으로 누구나 열 수 있습니다. 사내 자료를 넣었다면
-      호스팅의 접근 제어(Cloudflare Access, Netlify 비밀번호 보호 등)를 켜세요.
+접근 제어
+  Cloudflare Pages 로 올릴 때는 gate/_worker.js 가 dist/ 로 함께 복사되어
+  비밀번호를 묻습니다 (비밀번호는 Pages 환경변수 SITE_PASSWORD).
+  다른 호스팅에 올린다면 _worker.js 는 동작하지 않으므로, 그쪽의 접근 제어를
+  따로 켜야 합니다. 켜기 전까지 발급된 주소는 누구나 열 수 있습니다.
 """
 
 from __future__ import annotations
@@ -42,6 +45,8 @@ APP_DIR = os.path.dirname(os.path.abspath(__file__))
 DIST_DIR = os.path.join(APP_DIR, "dist")
 OUT_PATH = os.path.join(DIST_DIR, "index.html")
 ADMIN_PATH = os.path.join(DIST_DIR, "admin", "index.html")
+GATE_SRC = os.path.join(APP_DIR, "gate", "_worker.js")
+GATE_PATH = os.path.join(DIST_DIR, "_worker.js")
 
 
 def read(*parts: str) -> str:
@@ -98,6 +103,22 @@ def write_admin() -> None:
     print(f"[build] 관리자 -> {ADMIN_PATH}  (대상 리포 {repo or '미지정'})")
 
 
+def write_gate() -> None:
+    """비밀번호 게이트를 dist/_worker.js 로 복사합니다.
+
+    Cloudflare Pages 는 배포 루트의 `_worker.js` 를 모든 요청의 앞단으로 씁니다.
+    이 파일이 없으면 사이트가 무방비로 열리므로, 없으면 빌드를 실패시킵니다.
+    """
+    if not os.path.exists(GATE_SRC):
+        raise SystemExit(f"[build] 중단: 비밀번호 게이트가 없습니다 -> {GATE_SRC}")
+
+    os.makedirs(DIST_DIR, exist_ok=True)
+    with open(GATE_SRC, encoding="utf-8") as src, \
+            open(GATE_PATH, "w", encoding="utf-8", newline="\n") as dst:
+        dst.write(src.read())
+    print(f"[build] 비밀번호 게이트 -> {GATE_PATH}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--open", action="store_true", help="빌드 후 브라우저로 열기")
@@ -142,6 +163,7 @@ def main() -> int:
         f.write(html)
 
     write_admin()
+    write_gate()
 
     size_kb = os.path.getsize(OUT_PATH) / 1024
     print(f"[build] 완료 -> {OUT_PATH}  ({size_kb:,.0f} KB)")

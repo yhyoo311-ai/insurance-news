@@ -58,6 +58,8 @@ jobs:
         run: |
           test -f dist/index.html || { echo "dist/index.html 이 없습니다"; exit 1; }
           test -f dist/admin/index.html || { echo "dist/admin/index.html 이 없습니다"; exit 1; }
+          # 게이트가 빠지면 사이트가 무방비로 열립니다 — 배포 전에 막습니다.
+          test -f dist/_worker.js || { echo "dist/_worker.js 가 없습니다 (비밀번호 게이트 누락)"; exit 1; }
           ls -lh dist dist/admin
 
       - name: Cloudflare Pages 업로드

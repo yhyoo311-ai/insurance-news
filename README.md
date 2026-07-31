@@ -188,16 +188,27 @@ My Profile → API Tokens → Create Token → **Custom token**
 리포 → Actions → **정보사이트 배포 (Cloudflare Pages)** → Run workflow.
 2~3분 뒤 `https://insuranceinfo.pages.dev` 에서 열립니다.
 
-**⑥ 로그인 걸기 (Cloudflare Access — 나만 보기)**
+**⑥ 로그인 걸기 (비밀번호 게이트 — 나만 보기)**
 
-1. Cloudflare 대시보드 → **Zero Trust** (처음이면 무료 플랜 선택, 카드 불필요)
-2. **Access → Applications → Add an application → Self-hosted**
-3. Application domain: Subdomain `insuranceinfo`, Domain `pages.dev`
-4. Policy: Action **Allow** / Include → **Emails** → 본인 이메일
-   (동료에게 열어줄 땐 이 목록에 추가하거나 *Emails ending in* 으로 회사 도메인 지정)
-5. 저장하면 접속 시 이메일로 6자리 코드가 오고, 입력한 사람만 열립니다
+Cloudflare → **Workers & Pages → insuranceinfo → Settings → Variables and Secrets**
 
-> ⑥을 켜기 전까지는 주소를 아는 누구나 볼 수 있습니다. **먼저 ⑥을 끝내고 주소를 공유하세요.**
+| 항목 | 값 |
+|------|-----|
+| 이름 | `SITE_PASSWORD` |
+| 타입 | **Secret** (Text 아님 — Text 는 대시보드에 그대로 보입니다) |
+| 값 | 원하는 비밀번호. 대입 공격에 버티도록 **길게** |
+| 환경 | **Production** (Preview 도 쓰면 함께 추가) |
+
+저장하면 접속 시 비밀번호를 묻고, 맞으면 30일짜리 서명 쿠키가 발급됩니다.
+`SITE_PASSWORD` 를 바꾸면 기존 세션은 전부 무효가 됩니다. 로그아웃은 `/__logout`.
+
+> **Cloudflare Access 는 이 프로젝트에 쓸 수 없습니다.** Access 는 본인 계정에 등록된
+> 도메인(zone)에만 걸립니다. `pages.dev` 는 Cloudflare 소유 공용 도메인이라 대상이
+> 되지 않습니다. 그래서 사이트 자체가 인증합니다 — `gate/_worker.js` 참고.
+> 도메인을 사서 Cloudflare 에 등록하면 그때는 Access(이메일 OTP)로 바꿀 수 있습니다.
+
+> `SITE_PASSWORD` 를 설정하기 전까지는 **아무도** 열 수 없습니다(503). 설정을 깜빡한 채
+> 배포됐을 때 무방비로 열리는 것보다 안전한 쪽으로 정했습니다.
 
 **⑦ 웹 관리자용 GitHub 토큰**
 
