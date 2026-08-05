@@ -1222,6 +1222,12 @@
           "source": "대량보유 상황보고"
         },
         {
+          "name": "BlackRockFundAdvisors",
+          "stake": 6.08,
+          "role": "5% 이상 대량보유 (2026-08-04)",
+          "source": "대량보유 상황보고"
+        },
+        {
           "name": "김준기",
           "stake": 6.07,
           "role": "친인척",
@@ -1232,12 +1238,6 @@
           "stake": 5.1,
           "role": "기타 단체",
           "source": "최대주주 현황"
-        },
-        {
-          "name": "BlackRockFundAdvisors",
-          "stake": 5.06,
-          "role": "5% 이상 대량보유 (2026-01-29)",
-          "source": "대량보유 상황보고"
         },
         {
           "name": "김주원",
