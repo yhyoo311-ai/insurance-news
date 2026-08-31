@@ -852,6 +852,41 @@
     });
   }
 
+  /* ─────────────────────── 고정 상단바 ─────────────────────── */
+
+  /* CSS 가 쓰는 두 값을 실측해 넘깁니다.
+       --topbar-h  상단바 높이        → 필터 줄(.controls)이 붙는 높이
+       --stick-h   상단바 + 필터 줄   → 표 열 머리글이 붙는 높이
+     화면 폭·글자 크기·서체 로드에 따라 줄바꿈되며 높이가 크게 변하므로
+     (상단바만 해도 59px ~ 160px) 상수로 둘 수 없습니다. */
+  function measureStick() {
+    var bar = document.querySelector('.topbar');
+    var ctl = document.getElementById('controls');
+    if (!bar) return;
+    var top = Math.round(bar.getBoundingClientRect().height);
+    var ctlH = ctl ? Math.round(ctl.getBoundingClientRect().height) : 0;
+    var root = document.documentElement.style;
+    root.setProperty('--topbar-h', top + 'px');
+    root.setProperty('--stick-h', (top + ctlH) + 'px');
+  }
+
+  function watchStick() {
+    measureStick();
+    var targets = [document.querySelector('.topbar'), document.getElementById('controls')]
+      .filter(Boolean);
+    if (!targets.length) return;
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(measureStick);
+      targets.forEach(function (el) { ro.observe(el); });
+    } else {
+      window.addEventListener('resize', measureStick);
+    }
+    // 서체가 늦게 들어오면 높이가 한 번 더 변합니다
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(measureStick);
+    }
+  }
+
   /* ─────────────────────── 유틸 ─────────────────────── */
 
   function byId(id) {
@@ -873,6 +908,7 @@
 
   wireControls();
   syncControls();
+  watchStick();
   rerender();
 
   // #c=<회사id> 로 들어오면 그 회사 패널을 바로 엽니다 (주소 공유용)
