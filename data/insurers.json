@@ -51,12 +51,6 @@
           "source": "최대주주 현황"
         },
         {
-          "name": "국민연금공단",
-          "stake": 6.87,
-          "role": "5% 이상 대량보유 (2024-08-05)",
-          "source": "대량보유 상황보고"
-        },
-        {
           "name": "이부진",
           "stake": 5.76,
           "role": "계열회사 등기임원",
@@ -211,9 +205,9 @@
       "dart_name": "교보생명보험",
       "dart_filing": {
         "kind": "사업보고서",
-        "report_nm": "사업보고서 (2025.12)",
-        "rcept_dt": "20260331",
-        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331004015"
+        "report_nm": "[기재정정]사업보고서 (2025.12)",
+        "rcept_dt": "20260813",
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260813001068"
       },
       "liabilities": 1205110,
       "operating_income": 10616,
@@ -1147,8 +1141,8 @@
         },
         {
           "name": "슈로더인베스트먼트매니지먼트",
-          "stake": 5.04,
-          "role": "5% 이상 대량보유 (2025-10-23)",
+          "stake": 4.43,
+          "role": "5% 이상 대량보유 (2026-08-19)",
           "source": "대량보유 상황보고"
         },
         {
